@@ -21,7 +21,7 @@ public class API {
 //Please put the values of consumerKy and consumerSecret of your app 
 	public final static String consumerKey = "6MMo4l9jicpOKGAOZubTWTgq4"; // "your key here";
 	public final static String consumerSecret = "FiBsNbjAul4nVqo1mrkuIs0l2mKEEZHaEwEN6m1NHRSub1SXwG"; // "your secret key here";
-	private final String CALLBACKURL = "http://android.cronycle.com/login";  //Callback URL that tells the WebView to load this activity when it finishes with twitter.com. (see manifest)
+	public final static String CALLBACKURL = "http://cronycle.com";  //Callback URL that tells the WebView to load this activity when it finishes with twitter.com. (see manifest)
 
 	public API() {
 		twitter = new TwitterFactory().getInstance();

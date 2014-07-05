@@ -1,17 +1,12 @@
 package com.cronycle.client;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
-import com.cronycle.client.Libs.API;
-import com.cronycle.client.Libs.CronycleUserData;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.StrictMode;
+
+import com.cronycle.client.Libs.API;
 
 public class Login extends Activity {
 
@@ -20,9 +15,18 @@ public class Login extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         
+        initControl();
+        
+        if (android.os.Build.VERSION.SDK_INT > 8) {
+	        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+	        StrictMode.setThreadPolicy(policy);
+        }
+        
         String uri = API.Current().getOAuthLoginUrl();
         
-        this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+        if (uri != null) {
+        	this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+        }
         
 //        Log.i("Login", "Getting user");
 //        
@@ -41,5 +45,12 @@ public class Login extends Activity {
 //				Log.i("User API", "Error while getting the user: " + arg0.toString());
 //			}
 //		});
+    }
+    
+    private void initControl() {
+        Uri uri = getIntent().getData();
+        if (uri != null && uri.toString().startsWith(API.CALLBACKURL)) {
+
+        }
     }
 }

@@ -63,9 +63,9 @@ public class API {
 		return null;
 	}
 	
-	public AccessToken getAccessToken() {
+	public AccessToken getAccessToken(String verifier) {
 		try {
-			return twitter.getOAuthAccessToken(requestToken);
+			return twitter.getOAuthAccessToken(requestToken, verifier);
 		} catch (TwitterException ex) {
 			Log.e("in API.getAccessToken", ex.getMessage());
 		}

@@ -88,7 +88,7 @@ public class TwitterActivity extends Activity {
 	
 	private void completeVerify(Uri uri) {
         if (uri != null) {
-            //String verifier = uri.getQueryParameter("oauth_verifier");
+            final String verifier = uri.getQueryParameter("oauth_verifier");
         	
         	final ProgressDialog dialog = ProgressDialog.show(
         			this, "Logging into Twitter", "Please wait...", true);
@@ -96,7 +96,7 @@ public class TwitterActivity extends Activity {
             try {
             	Thread thread = new Thread(new Runnable() {
             		public void run() {
-            			AccessToken token = API.Current().getAccessToken();
+            			AccessToken token = API.Current().getAccessToken(verifier);
             			
             			dialog.dismiss();
 

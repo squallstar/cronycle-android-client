@@ -7,14 +7,15 @@ import twitter4j.auth.AccessToken;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.cronycle.client.Libs.API;
 import com.cronycle.client.Libs.CronycleRequestSignIn;
@@ -106,22 +107,33 @@ public class TwitterActivity extends Activity {
             	        API.getCronycleApiClient().twitterSignIn(new CronycleRequestSignIn(token.getUserId(), token.getToken(), token.getTokenSecret()), new Callback<CronycleResponseSignIn>() {
             				
             				@Override
-            				public void success(CronycleResponseSignIn arg0, Response arg1) {
-            					// TODO Auto-generated method stub
+            				public void success(CronycleResponseSignIn response, Response arg1) {
             					
+            					SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+            					response.user.SaveToPreferences(prefs);
+            					
+            					dialog.dismiss();
+            					
+            					Toast.makeText(getApplicationContext(), String.format("Logged in as %s", response.user.getFull_name()), Toast.LENGTH_LONG).show();
+
+                                setResult(Activity.RESULT_OK, getIntent());
+                                finish();
             				}
             				
             				@Override
             				public void failure(RetrofitError arg0) {
-            					// TODO Auto-generated method stub
+            					
+            					dialog.dismiss();
+            					
+            					Toast.makeText(getApplicationContext(), "User not found", Toast.LENGTH_LONG).show();
+
+                                setResult(Activity.RESULT_CANCELED, getIntent());
+                                finish(); 
             					
             				}
             			});
             			
-            			dialog.dismiss();
-
-                        setResult(Activity.RESULT_OK, getIntent());
-                        finish();            			
+            			           			
             		}
             	});
             	

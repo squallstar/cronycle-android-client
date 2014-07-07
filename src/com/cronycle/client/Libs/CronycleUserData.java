@@ -1,5 +1,9 @@
 package com.cronycle.client.Libs;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+
+import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 
 public class CronycleUserData {
@@ -113,6 +117,15 @@ public class CronycleUserData {
 
     public void setTotal_links_count(int total_links_count) {
         this.total_links_count = total_links_count;
+    }
+    
+    public void SaveToPreferences(SharedPreferences prefs)
+    {
+    	Editor prefsEditor = prefs.edit();
+    	Gson gson = new Gson();
+    	String json = gson.toJson(this);
+    	prefsEditor.putString("CurrentUser", json);
+        prefsEditor.commit();
     }
 
 }

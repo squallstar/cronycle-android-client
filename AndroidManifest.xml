@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".Login"
+            android:name=".LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,22 +27,14 @@
         </activity>
         <activity
             android:name=".TwitterActivity"
-            android:label="@string/title_activity_twitter" >
+            android:label="@string/title_activity_twitter"
+            android:exported="true" >
             
             
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
+                <action android:name="com.cronycle.client.TwitterAuth" >
                 </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
-
-                <data
-                    android:host="cronycle.com"
-                    android:scheme="http" >
-                </data>
+				<category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>

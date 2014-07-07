@@ -1,15 +1,15 @@
 package com.cronycle.client.Libs;
 
-import android.util.Log;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.http.GET;
 import retrofit.http.Query;
-
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
+import android.util.Log;
 
 public class API {
 	
@@ -21,7 +21,7 @@ public class API {
 //Please put the values of consumerKy and consumerSecret of your app 
 	public final static String consumerKey = "6MMo4l9jicpOKGAOZubTWTgq4"; // "your key here";
 	public final static String consumerSecret = "FiBsNbjAul4nVqo1mrkuIs0l2mKEEZHaEwEN6m1NHRSub1SXwG"; // "your secret key here";
-	public final static String CALLBACKURL = "http://cronycle.com";  //Callback URL that tells the WebView to load this activity when it finishes with twitter.com. (see manifest)
+	public final static String CALLBACKURL = "cronycle:///twitter";  //Callback URL that tells the WebView to load this activity when it finishes with twitter.com. (see manifest)
 
 	public API() {
 		twitter = new TwitterFactory().getInstance();
@@ -58,6 +58,16 @@ public class API {
 			return requestToken.getAuthenticationURL();
 		} catch (TwitterException ex) {
 			Log.e("in API.getOAuthLoginUrl", ex.getMessage());
+		}
+		
+		return null;
+	}
+	
+	public AccessToken getAccessToken() {
+		try {
+			return twitter.getOAuthAccessToken(requestToken);
+		} catch (TwitterException ex) {
+			Log.e("in API.getAccessToken", ex.getMessage());
 		}
 		
 		return null;

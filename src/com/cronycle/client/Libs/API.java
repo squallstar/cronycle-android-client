@@ -2,7 +2,10 @@ package com.cronycle.client.Libs;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
+import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.Header;
+import retrofit.http.POST;
 import retrofit.http.Query;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -18,14 +21,12 @@ public class API {
 	
 	Twitter twitter;
 	RequestToken requestToken;
-//Please put the values of consumerKy and consumerSecret of your app 
-	public final static String consumerKey = "6MMo4l9jicpOKGAOZubTWTgq4"; // "your key here";
-	public final static String consumerSecret = "FiBsNbjAul4nVqo1mrkuIs0l2mKEEZHaEwEN6m1NHRSub1SXwG"; // "your secret key here";
-	public final static String CALLBACKURL = "cronycle:///twitter";  //Callback URL that tells the WebView to load this activity when it finishes with twitter.com. (see manifest)
+
+	public final static String consumerKey = "6MMo4l9jicpOKGAOZubTWTgq4";
+	public final static String consumerSecret = "FiBsNbjAul4nVqo1mrkuIs0l2mKEEZHaEwEN6m1NHRSub1SXwG";
+	public final static String CALLBACKURL = "cronycle://twitter";
 
 	public API() {
-		twitter = new TwitterFactory().getInstance();
-		twitter.setOAuthConsumer(consumerKey, consumerSecret);
 	}
 	
 	public static API Current() {
@@ -54,6 +55,9 @@ public class API {
 	 */
 	public String getOAuthLoginUrl() {
 		try {
+			twitter = new TwitterFactory().getInstance();
+			twitter.setOAuthConsumer(consumerKey, consumerSecret);
+			
 			requestToken = twitter.getOAuthRequestToken(CALLBACKURL);
 			return requestToken.getAuthenticationURL();
 		} catch (TwitterException ex) {
@@ -76,6 +80,8 @@ public class API {
     public interface CronycleApiInterface {
         @GET("/v3/user.json?auth_token=3e1bd989408c45d9")
         void getUser(@Query("limit") int limit, Callback<CronycleUserData> callback);
-    }
-	
+        
+        @POST("/v3/sign_in.json")
+    	void twitterSignIn(@Body CronycleRequestSignIn userData, Callback<CronycleResponseSignIn> callback);
+    }	
 }

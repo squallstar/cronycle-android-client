@@ -1,5 +1,8 @@
 package com.cronycle.client;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -9,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.cronycle.client.Libs.API;
+import com.cronycle.client.Libs.CronycleResponseSignIn;
+import com.cronycle.client.Libs.CronycleUserData;
 
 public class LoginActivity extends Activity {
 

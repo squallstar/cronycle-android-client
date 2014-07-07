@@ -1,5 +1,8 @@
 package com.cronycle.client;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import twitter4j.auth.AccessToken;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -14,6 +17,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.cronycle.client.Libs.API;
+import com.cronycle.client.Libs.CronycleRequestSignIn;
+import com.cronycle.client.Libs.CronycleResponseSignIn;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class TwitterActivity extends Activity {
@@ -97,6 +102,21 @@ public class TwitterActivity extends Activity {
             	Thread thread = new Thread(new Runnable() {
             		public void run() {
             			AccessToken token = API.Current().getAccessToken(verifier);
+
+            	        API.getCronycleApiClient().twitterSignIn(new CronycleRequestSignIn(token.getUserId(), token.getToken(), token.getTokenSecret()), new Callback<CronycleResponseSignIn>() {
+            				
+            				@Override
+            				public void success(CronycleResponseSignIn arg0, Response arg1) {
+            					// TODO Auto-generated method stub
+            					
+            				}
+            				
+            				@Override
+            				public void failure(RetrofitError arg0) {
+            					// TODO Auto-generated method stub
+            					
+            				}
+            			});
             			
             			dialog.dismiss();
 

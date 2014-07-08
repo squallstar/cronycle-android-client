@@ -7,7 +7,6 @@ import twitter4j.auth.AccessToken;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -97,7 +96,7 @@ public class TwitterActivity extends Activity {
             final String verifier = uri.getQueryParameter("oauth_verifier");
         	
         	final ProgressDialog dialog = ProgressDialog.show(
-        			this, "Logging into Twitter", "Please wait...", true);
+        			this, "Logging into Cronycle", "We are now verifying your account...", true);
         	
             try {
             	Thread thread = new Thread(new Runnable() {
@@ -109,12 +108,12 @@ public class TwitterActivity extends Activity {
             				@Override
             				public void success(CronycleResponseSignIn response, Response arg1) {
             					
-            					SharedPreferences prefs = getPreferences(MODE_PRIVATE);
-            					response.user.SaveToPreferences(prefs);
+            					response.user.setAuthToken(response.auth_token);
+            					response.user.SaveToPreferences(getApplicationContext());
             					
             					dialog.dismiss();
             					
-            					Toast.makeText(getApplicationContext(), String.format("Logged in as %s", response.user.getFull_name()), Toast.LENGTH_LONG).show();
+            					//Toast.makeText(getApplicationContext(), String.format("Logged in as %s", response.user.getFull_name()), Toast.LENGTH_LONG).show();
 
                                 setResult(Activity.RESULT_OK, getIntent());
                                 finish();

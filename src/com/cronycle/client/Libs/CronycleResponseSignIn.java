@@ -5,6 +5,6 @@ public class CronycleResponseSignIn {
 	
 	public String auth_token;
 	
-	public CronycleUserData user;
+	public CronycleUser user;
 
 }

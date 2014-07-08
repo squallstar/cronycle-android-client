@@ -1,19 +1,21 @@
 package com.cronycle.client;
 
+import java.util.List;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.cronycle.client.Libs.API;
-import com.cronycle.client.Libs.CronycleResponseSignIn;
-import com.cronycle.client.Libs.CronycleUserData;
+import com.cronycle.client.Libs.CronycleCollection;
+import com.cronycle.client.Libs.CronycleUser;
 
 public class LoginActivity extends Activity {
 
@@ -32,24 +34,37 @@ public class LoginActivity extends Activity {
             	startActivity(auth);
             }
         });
-        
-        
-//        Log.i("Login", "Getting user");
-//        
-//        API.getCronycleApiClient().getUser(1, new Callback<CronycleUserData>() {
-//			
-//			@Override
-//			public void success(CronycleUserData user, Response arg1) {
-//				// TODO Auto-generated method stub
-//				Log.i("User API", user.getFull_name());
-//				
-//			}
-//			
-//			@Override
-//			public void failure(RetrofitError arg0) {
-//				// TODO Auto-generated method stub
-//				Log.i("User API", "Error while getting the user: " + arg0.toString());
-//			}
-//		});
+    }
+    
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	
+    	if (CronycleUser.CurrentUser(getApplicationContext()) != null) {
+    		Toast.makeText(getApplicationContext(), String.format("Logged in as %s", CronycleUser.CurrentUser().getFull_name()), Toast.LENGTH_LONG).show();
+    		
+    		final ProgressDialog dialog = ProgressDialog.show(
+        			this, "Loading Collections", "Please wait while we download your collections...", true);
+    		
+    		Thread thread = new Thread(new Runnable() {
+        		public void run() {
+        			API.getCronycleApiClient().getUserCollections(CronycleUser.CurrentUser().getAuthToken(), new Callback<List<CronycleCollection>>() {
+        				
+        				@Override
+        				public void success(List<CronycleCollection> collections, Response arg1) {
+        					Toast.makeText(getApplicationContext(), String.format("Got %i collections", collections.size()), Toast.LENGTH_LONG).show();
+        					dialog.dismiss();
+        				}
+        				
+        				@Override
+        				public void failure(RetrofitError arg0) {
+        					dialog.dismiss();
+        				}
+        			});
+        		}
+        	});
+    		
+    		thread.start();
+    	}
     }
 }

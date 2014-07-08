@@ -1,12 +1,16 @@
 package com.cronycle.client.Libs;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 
-public class CronycleUserData {
+public class CronycleUser {
+	
+	private static CronycleUser currentUserInstance;
 
     @Expose
     private int id;
@@ -30,6 +34,8 @@ public class CronycleUserData {
     private int total_collections_count;
     @Expose
     private int total_links_count;
+    @Expose
+    private String auth_token;
 
     public int getId() {
         return id;
@@ -119,13 +125,45 @@ public class CronycleUserData {
         this.total_links_count = total_links_count;
     }
     
-    public void SaveToPreferences(SharedPreferences prefs)
+    public void setAuthToken(String token) {
+    	this.auth_token = token;
+    }
+    
+    public String getAuthToken() {
+    	return auth_token;
+    }
+    
+    public void SaveToPreferences(Context ctx)
     {
+    	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+    	
     	Editor prefsEditor = prefs.edit();
     	Gson gson = new Gson();
     	String json = gson.toJson(this);
     	prefsEditor.putString("CurrentUser", json);
         prefsEditor.commit();
+    }
+    
+    public static CronycleUser CurrentUser(Context ctx)
+    {
+    	if (currentUserInstance == null)
+    	{
+    		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+    		
+    		if (prefs.contains("CurrentUser"))
+        	{
+        		String json = prefs.getString("CurrentUser", "");
+        		Gson gson = new Gson();
+        		currentUserInstance = gson.fromJson(json, CronycleUser.class);
+        	}
+    	}
+    	
+    	return currentUserInstance;
+    }
+    
+    public static CronycleUser CurrentUser()
+    {
+    	return currentUserInstance;
     }
 
 }

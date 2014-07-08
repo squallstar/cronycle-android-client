@@ -1,11 +1,13 @@
 package com.cronycle.client.Libs;
 
+import java.util.List;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.http.Body;
 import retrofit.http.GET;
-import retrofit.http.Header;
 import retrofit.http.POST;
+import retrofit.http.Path;
 import retrofit.http.Query;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -79,9 +81,12 @@ public class API {
 
     public interface CronycleApiInterface {
         @GET("/v3/user.json?auth_token=3e1bd989408c45d9")
-        void getUser(@Query("limit") int limit, Callback<CronycleUserData> callback);
+        void getUser(@Query("limit") int limit, Callback<CronycleUser> callback);
         
         @POST("/v3/sign_in.json")
     	void twitterSignIn(@Body CronycleRequestSignIn userData, Callback<CronycleResponseSignIn> callback);
+        
+        @GET("/v3/collections.json")
+        void getUserCollections(@Query("auth_token") String auth_token, Callback<List<CronycleCollection>> callback);
     }	
 }

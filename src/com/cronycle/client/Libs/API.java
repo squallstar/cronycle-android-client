@@ -83,6 +83,11 @@ public class API {
     	void twitterSignIn(@Body CronycleRequestSignIn userData, Callback<CronycleResponseSignIn> callback);
         
         @GET("/v3/collections.json")
-        void getUserCollections(@Query("auth_token") String auth_token, Callback<List<CronycleCollection>> callback);
+        void getUserCollections(
+        		@Query("include_links") Boolean include_links,
+        		@Query("include_first") int include_first,
+        		@Query("auth_token") String auth_token,
+        		Callback<List<CronycleCollection>> callback
+        );
     }	
 }

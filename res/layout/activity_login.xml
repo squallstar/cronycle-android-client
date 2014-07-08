@@ -11,6 +11,7 @@
     android:layout_height="250dp"
     android:layout_width="250dp"
     android:layout_gravity="center"
+    android:contentDescription="Cronycle Logo"
     android:src="@drawable/logo_login" />
 
     <Button
@@ -24,7 +25,7 @@
     	android:textColor="#FFFFFF"
     	android:padding="15dp"
     	android:paddingBottom="50dp"
-    	android:text="Sign in with Twitter" />
+    	android:text="@string/btn_signin_twitter" />
     
     <ProgressBar
 	  android:id="@+id/loader" 

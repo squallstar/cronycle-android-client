@@ -26,6 +26,10 @@ public class CronycleCollection {
 	
 	public CronycleCollectionFilter[] filters;
 	
+	public CronycleAsset cover_asset;
+	
+	public CronycleLink[] links;
+	
 	public CronycleCollectionUser user;
 	
 	public static class CronycleCollectionUser {

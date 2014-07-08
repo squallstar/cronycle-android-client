@@ -37,6 +37,19 @@
 				<category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name=".CollectionsActivity"
+            android:label="@string/title_activity_collections"
+            android:exported="true" >
+            
+            
+            <intent-filter>
+                <action android:name="com.cronycle.client.CollectionsActivity" >
+                </action>
+				<category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

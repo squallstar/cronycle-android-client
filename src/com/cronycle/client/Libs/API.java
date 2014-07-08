@@ -80,8 +80,8 @@ public class API {
 	}
 
     public interface CronycleApiInterface {
-        @GET("/v3/user.json?auth_token=3e1bd989408c45d9")
-        void getUser(@Query("limit") int limit, Callback<CronycleUser> callback);
+        @GET("/v3/user.json")
+        void getUser(@Query("auth_token") String auth_token, Callback<CronycleUser> callback);
         
         @POST("/v3/sign_in.json")
     	void twitterSignIn(@Body CronycleRequestSignIn userData, Callback<CronycleResponseSignIn> callback);

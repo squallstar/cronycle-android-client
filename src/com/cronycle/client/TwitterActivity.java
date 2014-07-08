@@ -6,6 +6,7 @@ import retrofit.client.Response;
 import twitter4j.auth.AccessToken;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
@@ -71,6 +72,8 @@ public class TwitterActivity extends Activity {
                 try {                	
 
                 	final String uri = API.Current().getOAuthLoginUrl();
+                	
+                	dialog.dismiss();
                     
                     if (uri != null) {
                     	
@@ -79,10 +82,17 @@ public class TwitterActivity extends Activity {
                     			cronycleWebClient.loadUrl(uri);
                     		}
                     	});                    	
+                    } else {
+                    	new AlertDialog.Builder(getApplicationContext())
+    				    .setTitle("Error")
+    				    .setMessage("Cannot contact Twitter. Please try later.")
+    				    .setPositiveButton(android.R.string.ok, null)
+    				    .setIcon(android.R.drawable.ic_dialog_alert)
+    				    .show();
+                    	
+                    	setResult(Activity.RESULT_OK, getIntent());
+                        finish();
                     }
-                    
-                    dialog.dismiss();
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

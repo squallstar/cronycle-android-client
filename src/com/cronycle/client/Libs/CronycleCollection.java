@@ -37,6 +37,12 @@ public class CronycleCollection {
 				else if (color.equals("pink")) internalColor = Color.parseColor("#dc5661");
 				else if (color.equals("red")) internalColor = Color.parseColor("#ed3f48");
 				else if (color.equals("yellow")) internalColor = Color.parseColor("#ffb341");
+
+				// Partners
+				else if (color.equals("bluffers")) internalColor = Color.parseColor("#38aeb6");
+				else if (color.equals("the_browser")) internalColor = Color.parseColor("#49746b");
+				else if (color.equals("which")) internalColor = Color.parseColor("#5faee1");
+				
 				else internalColor = Color.parseColor("#ffb341");
 			}
 			

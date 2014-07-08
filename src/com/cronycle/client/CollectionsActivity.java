@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.cronycle.client.adapters.CollectionsAdapter;
 
@@ -22,7 +20,7 @@ public class CollectionsActivity extends Activity {
 	    setContentView(R.layout.activity_collections);
 	    
 	    CronycleApplication app = (CronycleApplication) getApplication();
-	    CollectionsAdapter adapter = new CollectionsAdapter(this, app.getCurrentCollections());
+	    final CollectionsAdapter adapter = new CollectionsAdapter(this, app.getCurrentCollections());
 	
 	    GridView gridview = (GridView) findViewById(R.id.gridview);
 	    gridview.setAdapter(adapter);
@@ -32,9 +30,8 @@ public class CollectionsActivity extends Activity {
 	        @Override
 	        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	        {
-	            TextView songTitle = (TextView)view.findViewById(R.id.title);
-
 	            Intent collectionIntent = new Intent(getBaseContext(), CollectionActivity.class);
+	            collectionIntent.putExtra("private_id", adapter.getItem(position).private_id);
                 startActivity(collectionIntent);
 	        }
 	    });

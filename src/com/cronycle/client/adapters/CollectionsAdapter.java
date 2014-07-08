@@ -32,8 +32,8 @@ public class CollectionsAdapter extends BaseAdapter {
         return collections.size();
     }
 
-    public Object getItem(int position) {
-        return null;
+    public CronycleCollection getItem(int position) {
+        return collections.get(position);
     }
 
     public long getItemId(int position) {
@@ -45,7 +45,7 @@ public class CollectionsAdapter extends BaseAdapter {
         
     	View item;
         
-        CronycleCollection collection = collections.get(position);
+        CronycleCollection collection = getItem(position);
         
         if (convertView == null) {
         	LayoutInflater inflater = LayoutInflater.from(mContext);

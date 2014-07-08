@@ -6,7 +6,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -57,8 +57,8 @@ public class LoginActivity extends Activity {
 			final Intent collectionsActivity = new Intent(this, CollectionsActivity.class);
 			collectionsActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
     		
-    		final ProgressDialog dialog = ProgressDialog.show(
-        			this, "Loading Collections", "Please wait while we download your collections...", true);
+    		//final ProgressDialog dialog = ProgressDialog.show(
+        	//		this, "Loading Collections", "Please wait while we download your collections...", true);
     		
     		Thread thread = new Thread(new Runnable() {
         		public void run() {
@@ -67,7 +67,7 @@ public class LoginActivity extends Activity {
         				@Override
         				public void success(List<CronycleCollection> collections, Response arg1) {
         					Toast.makeText(getApplicationContext(), String.format("Got %d collections", collections.size()), Toast.LENGTH_LONG).show();
-        					dialog.dismiss();
+        					//dialog.dismiss();
         					
         					CronycleApplication app = (CronycleApplication)getApplication();
         					app.setCollections(collections);
@@ -82,8 +82,21 @@ public class LoginActivity extends Activity {
         				}
         				
         				@Override
-        				public void failure(RetrofitError arg0) {
-        					dialog.dismiss();
+        				public void failure(final RetrofitError err) {
+        					//dialog.dismiss();
+        					
+        					LoginActivity.this.runOnUiThread(new Runnable() {
+
+								public void run() {
+									
+                        			new AlertDialog.Builder(getApplicationContext())
+                				    .setTitle("Error")
+                				    .setMessage(err.getMessage())
+                				    .setPositiveButton(android.R.string.ok, null)
+                				    .setIcon(android.R.drawable.ic_dialog_alert)
+                				    .show();
+                        		}
+                        	}); 
         				}
         			});
         		}

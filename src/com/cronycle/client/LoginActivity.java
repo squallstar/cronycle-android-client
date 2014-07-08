@@ -55,6 +55,7 @@ public class LoginActivity extends Activity {
     		Toast.makeText(getApplicationContext(), String.format("Logged in as %s", CronycleUser.CurrentUser().getFull_name()), Toast.LENGTH_SHORT).show();
 
 			final Intent collectionsActivity = new Intent(this, CollectionsActivity.class);
+			collectionsActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
     		
     		final ProgressDialog dialog = ProgressDialog.show(
         			this, "Loading Collections", "Please wait while we download your collections...", true);

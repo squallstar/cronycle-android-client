@@ -8,9 +8,12 @@ import retrofit.client.Response;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.cronycle.client.Libs.API;
@@ -18,13 +21,19 @@ import com.cronycle.client.Libs.CronycleCollection;
 import com.cronycle.client.Libs.CronycleUser;
 
 public class LoginActivity extends Activity {
+	
+	ProgressBar loader;
+	Button btnTwitter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
         
-        Button btnTwitter = (Button) findViewById(R.id.btnSignTwitter);
+        btnTwitter = (Button) findViewById(R.id.btnSignTwitter);
+        loader = (ProgressBar) findViewById(R.id.loader);
         
         final Intent auth = new Intent(this, TwitterActivity.class);
         btnTwitter.setOnClickListener(new View.OnClickListener() {
@@ -41,6 +50,9 @@ public class LoginActivity extends Activity {
     	super.onResume();
     	
     	if (CronycleUser.CurrentUser(getApplicationContext()) != null) {
+    		btnTwitter.setVisibility(View.GONE);
+    		loader.setVisibility(View.VISIBLE);
+    		
     		Toast.makeText(getApplicationContext(), String.format("Logged in as %s", CronycleUser.CurrentUser().getFull_name()), Toast.LENGTH_SHORT).show();
     		
     		final ProgressDialog dialog = ProgressDialog.show(

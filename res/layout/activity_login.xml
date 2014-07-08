@@ -1,13 +1,38 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:background="#FDB24D"
     tools:context="${relativePackage}.${activityClass}" >
+    
+    <ImageView
+    android:layout_height="250dp"
+    android:layout_width="250dp"
+    android:layout_gravity="center"
+    android:src="@drawable/logo_login" />
 
     <Button
     	android:id="@+id/btnSignTwitter"
-    	android:layout_width="160dp"
+    	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
-    	android:text="Login with Twitter" />
+    	android:layout_gravity="center"
+    	android:background="#5AABEB"
+    	android:drawableLeft="@drawable/icon_twitter"
+    	android:drawablePadding="20dip"
+    	android:textColor="#FFFFFF"
+    	android:padding="15dp"
+    	android:paddingBottom="50dp"
+    	android:text="Sign in with Twitter" />
+    
+    <ProgressBar
+	  android:id="@+id/loader" 
+	 android:layout_width="wrap_content"
+	 android:layout_height="wrap_content"
+	 android:background ="@xml/progress"
+	 android:layout_marginTop="10dp"
+	 android:layout_gravity="center"
+	 android:visibility="gone" />
 
-</RelativeLayout>
+</LinearLayout>

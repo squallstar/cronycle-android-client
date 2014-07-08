@@ -7,7 +7,6 @@ import retrofit.RestAdapter;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
-import retrofit.http.Path;
 import retrofit.http.Query;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -24,13 +23,10 @@ public class API {
 	Twitter twitter;
 	RequestToken requestToken;
 
-	public final static String consumerKey = "6MMo4l9jicpOKGAOZubTWTgq4";
-	public final static String consumerSecret = "FiBsNbjAul4nVqo1mrkuIs0l2mKEEZHaEwEN6m1NHRSub1SXwG";
+	public final static String consumerKey = "qviFYtnlxu45G8mf1NuC6g";
+	public final static String consumerSecret = "bc9Swfbv6mt8rKLwecYjSUUFsfgCYcxPYuKvRTrLous";
 	public final static String CALLBACKURL = "cronycle://twitter";
 
-	public API() {
-	}
-	
 	public static API Current() {
 		if (instance == null) instance = new API();
 		return instance;

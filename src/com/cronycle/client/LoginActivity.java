@@ -68,6 +68,9 @@ public class LoginActivity extends Activity {
         					Toast.makeText(getApplicationContext(), String.format("Got %d collections", collections.size()), Toast.LENGTH_LONG).show();
         					dialog.dismiss();
         					
+        					CronycleApplication app = (CronycleApplication)getApplication();
+        					app.setCollections(collections);
+        					
         					LoginActivity.this.runOnUiThread(new Runnable() {
                         		public void run() {
                         			startActivity(collectionsActivity);

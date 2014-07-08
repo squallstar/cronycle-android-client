@@ -3,14 +3,19 @@ package com.cronycle.client.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridLayout.LayoutParams;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.cronycle.client.CronycleApplication;
+import com.cronycle.client.R;
 import com.cronycle.client.Libs.CronycleCollection;
+import com.squareup.picasso.Picasso;
 
 public class CollectionsAdapter extends BaseAdapter {
 	
@@ -37,25 +42,35 @@ public class CollectionsAdapter extends BaseAdapter {
 
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
+        
+    	View item;
         
         CronycleCollection collection = collections.get(position);
         
         if (convertView == null) {
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(LayoutParams.MATCH_PARENT, 400));
-
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8, 8, 8, 8);
-            imageView.setBackgroundColor(collection.settings.getColor());
+        	LayoutInflater inflater = LayoutInflater.from(mContext);
+        	
+        	item = inflater.inflate(R.layout.grid_collection, parent, false);
+            item.setLayoutParams(new GridView.LayoutParams(LayoutParams.MATCH_PARENT, 400));
         } else {
-            imageView = (ImageView) convertView;
+        	item = (View) convertView;
+        }
+        
+        item.setBackgroundColor(collection.settings.getColor());
+        
+        TextView title = (TextView) item.findViewById(R.id.title);
+        title.setText(collection.name);
+        
+        ImageView cover = (ImageView) item.findViewById(R.id.cover);
+        
+        if (convertView == null) {
+        	 title.setTypeface(((CronycleApplication)mContext.getApplicationContext()).proximaNovaBold);
         }
         
         if (collection.cover_asset != null) {
-        	
+        	Picasso.with(mContext).load(collection.cover_asset.getSmallOrDefaultAsset()).into(cover);
         }
         
-        return imageView;
+        return item;
     }
 }

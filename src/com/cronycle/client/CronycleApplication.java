@@ -4,12 +4,15 @@ import java.util.List;
 
 import android.app.Application;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 
 import com.cronycle.client.Libs.CronycleCollection;
 
 public class CronycleApplication extends Application {
 	
 	private List<CronycleCollection> currentCollections;
+	
+	public Typeface proximaNovaBold;
 	 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -19,6 +22,8 @@ public class CronycleApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		
+		proximaNovaBold = Typeface.createFromAsset(getAssets(), "ProximaNova-Bold.ttf");
 	}
  
 	@Override

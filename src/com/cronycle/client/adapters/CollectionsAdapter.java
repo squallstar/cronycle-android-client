@@ -40,7 +40,6 @@ public class CollectionsAdapter extends BaseAdapter {
         return 0;
     }
 
-
     public View getView(int position, View convertView, ViewGroup parent) {
         
     	View item;

@@ -1,10 +1,16 @@
 package com.cronycle.client;
 
-import com.cronycle.client.adapters.CollectionsAdapter;
-
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.cronycle.client.adapters.CollectionsAdapter;
 
 public class CollectionsActivity extends Activity {
 
@@ -20,6 +26,18 @@ public class CollectionsActivity extends Activity {
 	
 	    GridView gridview = (GridView) findViewById(R.id.gridview);
 	    gridview.setAdapter(adapter);
+	    
+	    gridview.setOnItemClickListener(new OnItemClickListener()
+	    {
+	        @Override
+	        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+	        {
+	            TextView songTitle = (TextView)view.findViewById(R.id.title);
+
+	            Intent collectionIntent = new Intent(getBaseContext(), CollectionActivity.class);
+                startActivity(collectionIntent);
+	        }
+	    });
 	}
 
 }

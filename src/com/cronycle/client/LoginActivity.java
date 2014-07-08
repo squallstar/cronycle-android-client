@@ -41,7 +41,7 @@ public class LoginActivity extends Activity {
     	super.onResume();
     	
     	if (CronycleUser.CurrentUser(getApplicationContext()) != null) {
-    		Toast.makeText(getApplicationContext(), String.format("Logged in as %s", CronycleUser.CurrentUser().getFull_name()), Toast.LENGTH_LONG).show();
+    		Toast.makeText(getApplicationContext(), String.format("Logged in as %s", CronycleUser.CurrentUser().getFull_name()), Toast.LENGTH_SHORT).show();
     		
     		final ProgressDialog dialog = ProgressDialog.show(
         			this, "Loading Collections", "Please wait while we download your collections...", true);
@@ -52,7 +52,7 @@ public class LoginActivity extends Activity {
         				
         				@Override
         				public void success(List<CronycleCollection> collections, Response arg1) {
-        					Toast.makeText(getApplicationContext(), String.format("Got %i collections", collections.size()), Toast.LENGTH_LONG).show();
+        					Toast.makeText(getApplicationContext(), String.format("Got %d collections", collections.size()), Toast.LENGTH_LONG).show();
         					dialog.dismiss();
         				}
         				

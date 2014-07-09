@@ -2,9 +2,12 @@ package com.cronycle.client.Libs;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.Path;
 import retrofit.http.Query;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -24,6 +27,8 @@ public class API {
 	public final static String consumerKey = "qviFYtnlxu45G8mf1NuC6g";
 	public final static String consumerSecret = "bc9Swfbv6mt8rKLwecYjSUUFsfgCYcxPYuKvRTrLous";
 	public final static String CALLBACKURL = "cronycle://twitter";
+	private OnFetchListener cb;
+	private OnFetchListener cb2;
 
 	public static API Current() {
 		if (instance == null) instance = new API();
@@ -42,6 +47,10 @@ public class API {
         }
 
         return sCronycleService;
+    }
+    
+    public interface OnFetchListener {
+        void onComplete(Boolean success);
     }
     
     /*
@@ -72,6 +81,33 @@ public class API {
 		
 		return null;
 	}
+	
+	public void loadLinksForCollection(final CronycleCollection collection, final OnFetchListener cb) {
+		
+		Thread thread = new Thread(new Runnable() {
+    		public void run() {
+    			getCronycleApiClient().getCollectionLinks(collection.private_id, 15, CronycleUser.CurrentUser().getAuthToken(), new Callback<CronycleLink[]>() {
+
+					@Override
+					public void failure(RetrofitError arg0) {
+						cb.onComplete(false);
+					}
+
+					@Override
+					public void success(CronycleLink[] new_links, Response arg1) {
+						for(int x = 0; x < new_links.length; x = x+1) {
+							collection.links.add(new_links[x]);
+						}
+						
+						cb.onComplete(true);
+					}
+				
+    			});
+    		}
+		});
+		
+		thread.start();
+	}
 
     public interface CronycleApiInterface {
         @GET("/v3/user.json")
@@ -86,6 +122,14 @@ public class API {
         		@Query("include_first") int include_first,
         		@Query("auth_token") String auth_token,
         		Callback<CronycleCollection[]> callback
+        );
+        
+        @GET("/v3/collections/{private_id}/links.json")
+        void getCollectionLinks(
+        		@Path("private_id") String private_id,
+        		@Query("limit") int limit,
+        		@Query("auth_token") String auth_token,
+        		Callback<CronycleLink[]> callback
         );
     }	
 }

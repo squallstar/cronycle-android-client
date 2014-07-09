@@ -55,10 +55,6 @@ public class TwitterActivity extends Activity {
         cronycleWebClient.clearCache(true);
         cronycleWebClient.clearFormData();
 
-//        cronycleWebClient.setWebChromeClient(new WebChromeClient() {
-//            
-//        });
-     
         loginToTwitter();
 	}
 	

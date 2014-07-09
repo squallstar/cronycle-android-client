@@ -3,9 +3,15 @@ package com.cronycle.client;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
+import com.cronycle.client.Libs.API;
+import com.cronycle.client.Libs.API.OnFetchListener;
 import com.cronycle.client.Libs.CronycleCollection;
 import com.cronycle.client.adapters.LinksAdapter;
 
@@ -39,10 +45,32 @@ public class CollectionActivity extends Activity {
 	    this.setTitle(collection.name);
 	    
 	    
-	    LinksAdapter adapter = new LinksAdapter(this, collection);
+	    final LinksAdapter adapter = new LinksAdapter(this, collection);
 	
 	    GridView itemsview = (GridView) findViewById(R.id.itemsview);
 	    itemsview.setAdapter(adapter);
+	    
+	    itemsview.setOnItemClickListener(new OnItemClickListener()
+	    {
+	        @Override
+	        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+	        {
+	        	String url = adapter.getItem(position).url;
+	        	Intent i = new Intent(Intent.ACTION_VIEW);
+	        	i.setData(Uri.parse(url));
+	        	startActivity(i);
+	        }
+	    });
+	    
+	    if (collection.links.size() == 0) {
+	    	API.Current().loadLinksForCollection(collection, new OnFetchListener() {
+				
+				@Override
+				public void onComplete(Boolean success) {
+					adapter.notifyDataSetChanged();					
+				}
+			});
+	    }
 	}
 	
 	@Override

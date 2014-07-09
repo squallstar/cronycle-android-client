@@ -1,5 +1,6 @@
 package com.cronycle.client.Libs;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import android.graphics.Color;
@@ -19,7 +20,7 @@ public class CronycleCollection {
 	public CronycleCollectionSettings settings;
 	
 	public CronycleCollection() {
-		this.links = new CronycleLink[] {};
+		this.links = new ArrayList<CronycleLink>();
 	}
 	
 	public static class CronycleCollectionSettings {
@@ -60,7 +61,7 @@ public class CronycleCollection {
 	
 	public CronycleAsset cover_asset;
 	
-	public CronycleLink[] links;
+	public ArrayList<CronycleLink> links;
 	
 	public CronycleCollectionUser user;
 	

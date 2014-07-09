@@ -27,11 +27,11 @@ public class LinksAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        return collection.links.length;
+        return collection.links.size();
     }
 
     public CronycleLink getItem(int position) {
-        return collection.links[position];
+        return collection.links.get(position);
     }
 
     public long getItemId(int position) {

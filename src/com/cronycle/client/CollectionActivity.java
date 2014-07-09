@@ -1,24 +1,35 @@
 package com.cronycle.client;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TypefaceSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.cronycle.client.Libs.API;
 import com.cronycle.client.Libs.API.OnFetchListener;
 import com.cronycle.client.Libs.CronycleCollection;
 import com.cronycle.client.adapters.LinksAdapter;
 
-public class CollectionActivity extends Activity {
+public class CollectionActivity extends Activity implements OnRefreshListener {
 	
 	CronycleCollection collection;
-
+	
+	SwipeRefreshLayout swipeLayout;
+	LinksAdapter adapter;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,11 +55,23 @@ public class CollectionActivity extends Activity {
 	    getActionBar().setBackgroundDrawable(new ColorDrawable(collection.settings.getColor()));    
 	    this.setTitle(collection.name);
 	    
+	    SpannableString s = new SpannableString(collection.name);
+	    s.setSpan(new TypefaceSpan("ProximaNova-Bold.ttf"), 0, s.length(),
+	            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+	 
+	    // Update the action bar title with the TypefaceSpan instance
+	    ActionBar actionBar = getActionBar();
+	    actionBar.setTitle(s);
 	    
-	    final LinksAdapter adapter = new LinksAdapter(this, collection);
+	    
+	    adapter = new LinksAdapter(this, collection);
 	
 	    GridView itemsview = (GridView) findViewById(R.id.itemsview);
 	    itemsview.setAdapter(adapter);
+	    
+	    swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+	    swipeLayout.setOnRefreshListener(this);
+	    swipeLayout.setColorSchemeColors(collection.settings.getColor(), Color.parseColor("#ffb341"), collection.settings.getColor(), Color.parseColor("#2E3339"));
 	    
 	    itemsview.setOnItemClickListener(new OnItemClickListener()
 	    {
@@ -63,11 +86,14 @@ public class CollectionActivity extends Activity {
 	    });
 	    
 	    if (collection.links.size() == 0) {
-	    	API.Current().loadLinksForCollection(collection, new OnFetchListener() {
+	    	swipeLayout.setRefreshing(true);
+	    	
+	    	API.Current().fetchMoreLinksForCollection(collection, new OnFetchListener() {
 				
 				@Override
-				public void onComplete(Boolean success) {
-					adapter.notifyDataSetChanged();					
+				public void onComplete(Boolean success, int newLinksCount) {
+					swipeLayout.setRefreshing(false);
+					if (newLinksCount > 0) adapter.notifyDataSetChanged();					
 				}
 			});
 	    }
@@ -78,5 +104,22 @@ public class CollectionActivity extends Activity {
 	    super.onBackPressed();
 	    overridePendingTransition(R.xml.push_right_out, R.xml.push_right_in);
 	}
-
+	
+	@Override
+	public void onRefresh() {
+		API.Current().fetchNewLinksForCollection(collection, new OnFetchListener() {
+			
+			@Override
+			public void onComplete(Boolean success, int newLinksCount) {
+				swipeLayout.setRefreshing(false);
+				
+				if (newLinksCount > 0) {
+					adapter.notifyDataSetChanged();	
+					Toast.makeText(getApplicationContext(), String.format("%d new entries", newLinksCount), Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(getApplicationContext(), "Nothing new to read", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+	}
 }

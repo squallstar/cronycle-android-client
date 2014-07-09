@@ -11,4 +11,5 @@
     android:gravity="center"
     android:padding="6dp"
     android:clipToPadding="false"
+    android:background="#CCCCCC"
 />

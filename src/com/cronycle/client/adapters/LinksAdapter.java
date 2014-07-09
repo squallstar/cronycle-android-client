@@ -46,15 +46,14 @@ public class LinksAdapter extends BaseAdapter {
     	if (!isFetching && position == collection.links.size()-5) {
     		
     		isFetching = true;
-    		final int currentLength = collection.links.size();
     		final LinksAdapter adapter = this;
     		
-    		API.Current().loadLinksForCollection(collection, new OnFetchListener() {
+    		API.Current().fetchMoreLinksForCollection(collection, new OnFetchListener() {
 				
 				@Override
-				public void onComplete(Boolean success) {
+				public void onComplete(Boolean success, int newLinksCount) {
 					
-					if (success && currentLength != collection.links.size()) {
+					if (success && newLinksCount > 0) {
 						// New links
 						adapter.notifyDataSetChanged();
 					}

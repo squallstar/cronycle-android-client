@@ -1,7 +1,5 @@
 package com.cronycle.client;
 
-import java.util.List;
-
 import android.app.Application;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
@@ -10,7 +8,7 @@ import com.cronycle.client.Libs.CronycleCollection;
 
 public class CronycleApplication extends Application {
 	
-	private List<CronycleCollection> currentCollections;
+	private CronycleCollection[] currentCollections;
 	
 	public Typeface proximaNovaBold;
 	public Typeface proximaNovaRegular;
@@ -42,11 +40,11 @@ public class CronycleApplication extends Application {
 		super.onTerminate();
 	}
  
-	public void setCollections(List<CronycleCollection> collections) {
+	public void setCollections(CronycleCollection[] collections) {
 		this.currentCollections = collections;
 	}
 	
-	public List<CronycleCollection> getCurrentCollections() {
+	public CronycleCollection[] getCurrentCollections() {
 		return this.currentCollections;
 	}
 }

@@ -1,7 +1,5 @@
 package com.cronycle.client.Libs;
 
-import java.util.List;
-
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.http.Body;
@@ -87,7 +85,7 @@ public class API {
         		@Query("include_links") Boolean include_links,
         		@Query("include_first") int include_first,
         		@Query("auth_token") String auth_token,
-        		Callback<List<CronycleCollection>> callback
+        		Callback<CronycleCollection[]> callback
         );
     }	
 }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 
 import com.cronycle.client.Libs.CronycleCollection;
 import com.cronycle.client.adapters.LinksAdapter;

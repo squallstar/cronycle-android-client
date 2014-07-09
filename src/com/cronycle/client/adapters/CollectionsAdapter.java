@@ -1,7 +1,5 @@
 package com.cronycle.client.adapters;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,19 +19,19 @@ public class CollectionsAdapter extends BaseAdapter {
 	
 	private Context mContext;
 	
-	private List<CronycleCollection> collections;
+	private CronycleCollection[] collections;
 
-    public CollectionsAdapter(Context c, List<CronycleCollection> collections) {
+    public CollectionsAdapter(Context c, CronycleCollection[] collections) {
         this.mContext = c;
         this.collections = collections;
     }
 
     public int getCount() {
-        return collections.size();
+        return collections.length;
     }
 
     public CronycleCollection getItem(int position) {
-        return collections.get(position);
+        return collections[position];
     }
 
     public long getItemId(int position) {
@@ -49,6 +47,7 @@ public class CollectionsAdapter extends BaseAdapter {
         if (convertView == null) {
         	LayoutInflater inflater = LayoutInflater.from(mContext);
         	item = inflater.inflate(R.layout.grid_collection, parent, false);
+        	item.setLayoutParams(new GridView.LayoutParams(LayoutParams.MATCH_PARENT, 400));
         } else {
         	item = (View) convertView;
         }
@@ -59,7 +58,7 @@ public class CollectionsAdapter extends BaseAdapter {
         title.setText(collection.name);
         
         TextView stats = (TextView) item.findViewById(R.id.stats);
-        stats.setText(String.format("%d entries", collection.getTotalLinksCount()));
+        stats.setText(String.format("%s entries", collection.getTotalLinksCount()));
         
         ImageView cover = (ImageView) item.findViewById(R.id.cover);
         

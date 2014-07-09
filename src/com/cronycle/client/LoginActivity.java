@@ -1,7 +1,5 @@
 package com.cronycle.client;
 
-import java.util.List;
-
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -62,11 +60,11 @@ public class LoginActivity extends Activity {
     		
     		Thread thread = new Thread(new Runnable() {
         		public void run() {
-        			API.getCronycleApiClient().getUserCollections(true, 4, CronycleUser.CurrentUser().getAuthToken(), new Callback<List<CronycleCollection>>() {
+        			API.getCronycleApiClient().getUserCollections(true, 4, CronycleUser.CurrentUser().getAuthToken(), new Callback<CronycleCollection[]>() {
         				
         				@Override
-        				public void success(List<CronycleCollection> collections, Response arg1) {
-        					Toast.makeText(getApplicationContext(), String.format("Got %d collections", collections.size()), Toast.LENGTH_LONG).show();
+        				public void success(CronycleCollection[] collections, Response arg1) {
+        					Toast.makeText(getApplicationContext(), String.format("Got %d collections", collections.length), Toast.LENGTH_LONG).show();
         					//dialog.dismiss();
         					
         					CronycleApplication app = (CronycleApplication)getApplication();
@@ -76,9 +74,7 @@ public class LoginActivity extends Activity {
                         		public void run() {
                         			startActivity(collectionsActivity);
                         		}
-                        	}); 
-        					
-        					
+                        	});
         				}
         				
         				@Override

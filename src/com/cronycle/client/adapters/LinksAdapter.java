@@ -43,7 +43,7 @@ public class LinksAdapter extends BaseAdapter {
     
     public View getView(int position, View convertView, ViewGroup parent) {
         
-    	if (!isFetching && position == collection.links.size()-1) {
+    	if (!isFetching && position == collection.links.size()-5) {
     		
     		isFetching = true;
     		final int currentLength = collection.links.size();

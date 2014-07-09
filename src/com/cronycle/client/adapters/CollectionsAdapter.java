@@ -37,7 +37,7 @@ public class CollectionsAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        
+    	
     	View item;
         
         CronycleCollection collection = getItem(position);

@@ -1,5 +1,7 @@
 package com.cronycle.client.Libs;
 
+import java.util.Locale;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -86,7 +88,13 @@ public class API {
 		
 		Thread thread = new Thread(new Runnable() {
     		public void run() {
-    			getCronycleApiClient().getCollectionLinks(collection.private_id, 15, CronycleUser.CurrentUser().getAuthToken(), new Callback<CronycleLink[]>() {
+    			String max_timestamp = "";
+    			
+    			if (collection.links.size() > 0) {
+    				max_timestamp = String.format(Locale.ENGLISH, "%d", collection.links.get(collection.links.size()-1).published_at-1);
+    			}
+    			
+    			getCronycleApiClient().getCollectionLinks(collection.private_id, max_timestamp, CronycleUser.CurrentUser().getAuthToken(), new Callback<CronycleLink[]>() {
 
 					@Override
 					public void failure(RetrofitError arg0) {
@@ -127,7 +135,7 @@ public class API {
         @GET("/v3/collections/{private_id}/links.json")
         void getCollectionLinks(
         		@Path("private_id") String private_id,
-        		@Query("limit") int limit,
+        		@Query("max_timestamp") String max_timestamp,
         		@Query("auth_token") String auth_token,
         		Callback<CronycleLink[]> callback
         );

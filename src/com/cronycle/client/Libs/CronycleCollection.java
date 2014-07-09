@@ -18,6 +18,10 @@ public class CronycleCollection {
 	
 	public CronycleCollectionSettings settings;
 	
+	public CronycleCollection() {
+		this.links = new CronycleLink[] {};
+	}
+	
 	public static class CronycleCollectionSettings {
 		public String color;
 		private int internalColor = 0;

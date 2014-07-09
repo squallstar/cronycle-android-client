@@ -39,7 +39,7 @@ public class CollectionActivity extends Activity {
 	    this.setTitle(collection.name);
 	    
 	    
-	    LinksAdapter adapter = new LinksAdapter(this, collection.links);
+	    LinksAdapter adapter = new LinksAdapter(this, collection);
 	
 	    GridView itemsview = (GridView) findViewById(R.id.itemsview);
 	    itemsview.setAdapter(adapter);

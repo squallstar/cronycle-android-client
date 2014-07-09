@@ -4,7 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/itemsview"
-    android:numColumns="1" >
+    android:numColumns="1"
+    android:background="#F6F6F6"
+    android:verticalSpacing="10dp"
+    android:padding="10dp"
+    android:clipToPadding="false"
+    >
     
 
 </GridView>

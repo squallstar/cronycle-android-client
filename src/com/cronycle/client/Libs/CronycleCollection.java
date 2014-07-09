@@ -1,5 +1,7 @@
 package com.cronycle.client.Libs;
 
+import java.util.Locale;
+
 import android.graphics.Color;
 
 public class CronycleCollection {
@@ -63,5 +65,10 @@ public class CronycleCollection {
 		public String full_name;
 		public String nickname;
 		public String image_url;
+	}
+	
+	public String getTotalLinksCount() {
+		if (total_links_count > 1000) return String.format(Locale.ENGLISH, "%dK", Math.round(total_links_count / 1000));
+		return String.format(Locale.ENGLISH, "%d", total_links_count);
 	}
 }

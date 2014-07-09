@@ -48,9 +48,7 @@ public class CollectionsAdapter extends BaseAdapter {
         
         if (convertView == null) {
         	LayoutInflater inflater = LayoutInflater.from(mContext);
-        	
         	item = inflater.inflate(R.layout.grid_collection, parent, false);
-            item.setLayoutParams(new GridView.LayoutParams(LayoutParams.MATCH_PARENT, 400));
         } else {
         	item = (View) convertView;
         }
@@ -60,10 +58,14 @@ public class CollectionsAdapter extends BaseAdapter {
         TextView title = (TextView) item.findViewById(R.id.title);
         title.setText(collection.name);
         
+        TextView stats = (TextView) item.findViewById(R.id.stats);
+        stats.setText(String.format("%d entries", collection.getTotalLinksCount()));
+        
         ImageView cover = (ImageView) item.findViewById(R.id.cover);
         
         if (convertView == null) {
-        	 title.setTypeface(((CronycleApplication)mContext.getApplicationContext()).proximaNovaBold);
+        	 title.setTypeface(((CronycleApplication)mContext.getApplicationContext()).proximaNovaSemiBold);
+        	 stats.setTypeface(((CronycleApplication)mContext.getApplicationContext()).proximaNovaSemiBold);
         }
         
         if (collection.cover_asset != null) {

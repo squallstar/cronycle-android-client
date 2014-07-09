@@ -47,7 +47,6 @@ public class CollectionsAdapter extends BaseAdapter {
         if (convertView == null) {
         	LayoutInflater inflater = LayoutInflater.from(mContext);
         	item = inflater.inflate(R.layout.grid_collection, parent, false);
-        	item.setLayoutParams(new GridView.LayoutParams(LayoutParams.MATCH_PARENT, 400));
         } else {
         	item = (View) convertView;
         }

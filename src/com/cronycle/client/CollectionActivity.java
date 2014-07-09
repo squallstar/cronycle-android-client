@@ -34,7 +34,7 @@ public class CollectionActivity extends Activity {
 	    	}
 	    }
 	    
-	    getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent))); 
+	    //getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent))); 
 	    getActionBar().setBackgroundDrawable(new ColorDrawable(collection.settings.getColor()));    
 	    this.setTitle(collection.name);
 	    

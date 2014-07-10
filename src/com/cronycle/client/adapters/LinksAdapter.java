@@ -49,7 +49,7 @@ public class LinksAdapter extends BaseAdapter {
     
     public View getView(int position, View convertView, ViewGroup parent) {
         
-    	if (!isFetching && position == collection.links.size()-5) {
+    	if (!isFetching && (position*10/collection.links.size()) > 7 ) {
     		
     		isFetching = true;
     		final LinksAdapter adapter = this;
@@ -98,7 +98,7 @@ public class LinksAdapter extends BaseAdapter {
         if (convertView == null) {
        	 title.setTypeface(((CronycleApplication)mContext.getApplicationContext()).proximaNovaSemiBold);
        	 description.setTypeface(((CronycleApplication)mContext.getApplicationContext()).proximaNovaRegular);
-       	 sourceLink.setTypeface(((CronycleApplication)mContext.getApplicationContext()).proximaNovaRegular);
+       	 sourceLink.setTypeface(((CronycleApplication)mContext.getApplicationContext()).proximaNovaSemiBold);
        	 postedAgo.setTypeface(((CronycleApplication)mContext.getApplicationContext()).proximaNovaRegular);
        	 
        	 sourceLink.setTextColor(collection.settings.getColor());

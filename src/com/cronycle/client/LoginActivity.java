@@ -54,8 +54,6 @@ public class LoginActivity extends Activity {
 
 			final Intent collectionsActivity = new Intent(this, CollectionsActivity.class);
     		
-    		//final ProgressDialog dialog = ProgressDialog.show(
-        	//		this, "Loading Collections", "Please wait while we download your collections...", true);
     		
     		Thread thread = new Thread(new Runnable() {
         		public void run() {
@@ -63,15 +61,14 @@ public class LoginActivity extends Activity {
         				
         				@Override
         				public void success(CronycleCollection[] collections, Response arg1) {
-        					Toast.makeText(getApplicationContext(), String.format("Got %d collections", collections.length), Toast.LENGTH_LONG).show();
-        					//dialog.dismiss();
+        					//Toast.makeText(getApplicationContext(), String.format("Got %d collections", collections.length), Toast.LENGTH_LONG).show();
         					
         					CronycleApplication app = (CronycleApplication)getApplication();
         					app.setCollections(collections);
         					
         					LoginActivity.this.runOnUiThread(new Runnable() {
                         		public void run() {
-                        			collectionsActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); 
+                        			collectionsActivity.addFlags(/*Intent.FLAG_ACTIVITY_NEW_TASK | */Intent.FLAG_ACTIVITY_CLEAR_TASK); 
                         			startActivity(collectionsActivity);
                         		}
                         	});
@@ -79,7 +76,6 @@ public class LoginActivity extends Activity {
         				
         				@Override
         				public void failure(final RetrofitError err) {
-        					//dialog.dismiss();
         					
         					LoginActivity.this.runOnUiThread(new Runnable() {
 

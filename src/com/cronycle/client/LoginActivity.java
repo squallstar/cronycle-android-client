@@ -1,5 +1,6 @@
 package com.cronycle.client;
 
+import com.crashlytics.android.Crashlytics;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -26,7 +27,9 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        Crashlytics.start(this);
+        
+		getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
         
         btnTwitter = (Button) findViewById(R.id.btnSignTwitter);

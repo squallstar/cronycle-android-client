@@ -30,7 +30,15 @@ public class CronycleCollection {
 		public CronycleCollectionLinksSettings links;
 		
 		public static class CronycleCollectionLinksSettings {
-			public String displayStyle;
+			public String displayStyle = "headline+image";
+			
+			public Boolean shouldDisplayImages() {
+				return ! displayStyle.equals("headline");
+			}
+			
+			public Boolean shouldDisplayTitle() {
+				return ! displayStyle.equals("image");
+			}
 		}
 		
 		public int getColor() {

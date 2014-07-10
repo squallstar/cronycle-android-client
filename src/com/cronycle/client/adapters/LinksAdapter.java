@@ -103,7 +103,9 @@ public class LinksAdapter extends BaseAdapter {
        	 sourceLink.setTextColor(collection.settings.getColor());
        }
         
-       if (link.lead_image != null) {
+       Boolean showImages = collection.settings.links.shouldDisplayImages();
+        
+       if (link.lead_image != null && showImages) {
         	
         	WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         	Display display = wm.getDefaultDisplay();
@@ -135,6 +137,13 @@ public class LinksAdapter extends BaseAdapter {
 						cover.setVisibility(View.GONE);
 					}
 				});
+        }
+       
+        if (!showImages) {
+        	cover.setVisibility(View.GONE);
+        } else if (!collection.settings.links.shouldDisplayTitle()) {
+        	title.setVisibility(View.GONE);
+        	description.setVisibility(View.GONE);
         }
 
         return item;

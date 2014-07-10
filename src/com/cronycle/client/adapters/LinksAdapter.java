@@ -1,11 +1,16 @@
 package com.cronycle.client.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Point;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.cronycle.client.CronycleApplication;
@@ -15,6 +20,7 @@ import com.cronycle.client.Libs.API.OnFetchListener;
 import com.cronycle.client.Libs.CronycleCollection;
 import com.cronycle.client.Libs.CronycleLink;
 import com.cronycle.client.Libs.ScaleToFitWidthHeightTransform;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class LinksAdapter extends BaseAdapter {
@@ -75,7 +81,7 @@ public class LinksAdapter extends BaseAdapter {
         	item = (View) convertView;
         }
         
-        ImageView cover = (ImageView) item.findViewById(R.id.cover);        
+        final ImageView cover = (ImageView) item.findViewById(R.id.cover);        
         
         TextView title = (TextView) item.findViewById(R.id.title);
         title.setText(link.name);
@@ -98,12 +104,38 @@ public class LinksAdapter extends BaseAdapter {
        	 sourceLink.setTextColor(collection.settings.getColor());
        }
         
-        if (link.lead_image != null) {
+       if (link.lead_image != null) {
+        	
+        	WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        	Display display = wm.getDefaultDisplay();
+        	Point size = new Point();
+        	display.getSize(size);
+        	
+        	int width = size.x - 80;
+        	int height = width * link.lead_image.height / link.lead_image.width;
+        	
+        	cover.setLayoutParams(new LayoutParams(width, height));
+        	
         	Picasso
         		.with(mContext)
         		.load(link.lead_image.getSmallOrDefaultAsset())
-        		.transform(new ScaleToFitWidthHeightTransform(cover.getWidth(), false))
-        		.into(cover);
+        		.transform(new ScaleToFitWidthHeightTransform(width, false))
+        		.into(cover, new Callback() {
+					
+					@Override
+					public void onSuccess() {
+						if (cover.getVisibility() == View.GONE) {
+							cover.setVisibility(View.VISIBLE);
+						}
+						
+						cover.setBackgroundColor(Color.WHITE);
+					}
+
+					@Override
+					public void onError() {
+						cover.setVisibility(View.GONE);
+					}
+				});
         }
 
         return item;

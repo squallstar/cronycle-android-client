@@ -17,6 +17,6 @@ public class CronycleLink {
 	public CronycleSource[] sources;	
 	
 	public CharSequence getPostedAgo() {	    
-	    return DateUtils.getRelativeTimeSpanString(published_at);
+	    return DateUtils.getRelativeTimeSpanString(published_at * 1000L);
 	}
 }

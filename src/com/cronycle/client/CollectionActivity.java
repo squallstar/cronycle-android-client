@@ -12,6 +12,7 @@ import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.TypefaceSpan;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -61,6 +62,7 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	 
 	    // Update the action bar title with the TypefaceSpan instance
 	    ActionBar actionBar = getActionBar();
+	    actionBar.setDisplayHomeAsUpEnabled(true);
 	    actionBar.setTitle(s);
 	    
 	    
@@ -96,6 +98,17 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 					if (newLinksCount > 0) adapter.notifyDataSetChanged();					
 				}
 			});
+	    }
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case android.R.id.home:
+	            onBackPressed();
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
 	    }
 	}
 	

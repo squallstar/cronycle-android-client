@@ -14,7 +14,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
-import android.widget.Toast;
 
 import com.cronycle.client.adapters.CollectionsAdapter;
 

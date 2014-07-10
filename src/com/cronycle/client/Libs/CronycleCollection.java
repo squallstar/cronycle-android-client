@@ -35,22 +35,29 @@ public class CronycleCollection {
 		
 		public int getColor() {
 			
+			// Cache further calls
 			if (internalColor == 0) {
-				if (color.equals("blue")) internalColor = Color.parseColor("#566fc3");
-				else if (color.equals("charcoal")) internalColor = Color.parseColor("#606468");
-				else if (color.equals("cyan")) internalColor = Color.parseColor("#67c8c3");
-				else if (color.equals("green")) internalColor = Color.parseColor("#32d890");
-				else if (color.equals("orange")) internalColor = Color.parseColor("#fa6828");
-				else if (color.equals("pink")) internalColor = Color.parseColor("#dc5661");
-				else if (color.equals("red")) internalColor = Color.parseColor("#ed3f48");
-				else if (color.equals("yellow")) internalColor = Color.parseColor("#ffb341");
-
-				// Partners
-				else if (color.equals("bluffers")) internalColor = Color.parseColor("#38aeb6");
-				else if (color.equals("the_browser")) internalColor = Color.parseColor("#49746b");
-				else if (color.equals("which")) internalColor = Color.parseColor("#5faee1");
 				
-				else internalColor = Color.parseColor("#ffb341");
+				if (color != null) {
+					if (color.equals("blue")) internalColor = Color.parseColor("#566fc3");
+					else if (color.equals("charcoal")) internalColor = Color.parseColor("#606468");
+					else if (color.equals("cyan")) internalColor = Color.parseColor("#67c8c3");
+					else if (color.equals("green")) internalColor = Color.parseColor("#32d890");
+					else if (color.equals("orange")) internalColor = Color.parseColor("#fa6828");
+					else if (color.equals("pink")) internalColor = Color.parseColor("#dc5661");
+					else if (color.equals("red")) internalColor = Color.parseColor("#ed3f48");
+					else if (color.equals("yellow")) internalColor = Color.parseColor("#ffb341");
+	
+					// Partners
+					else if (color.equals("bluffers")) internalColor = Color.parseColor("#38aeb6");
+					else if (color.equals("the_browser")) internalColor = Color.parseColor("#49746b");
+					else if (color.equals("which")) internalColor = Color.parseColor("#5faee1");
+				}
+				
+				// Final fallback
+				if (internalColor == 0) {
+					internalColor = Color.parseColor("#ffb341");
+				}
 			}
 			
 			return internalColor;

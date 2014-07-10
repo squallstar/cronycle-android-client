@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cronycle.client"
-    android:versionCode="3"
+    android:versionCode="5"
     android:versionName="2.0" >
 
     <uses-sdk
@@ -22,9 +22,10 @@
             android:name=".LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                 <action android:name="android.intent.action.MAIN" />
+                 <category android:name="android.intent.category.LAUNCHER" />
+                
+                 <data android:scheme="http" android:host="cronycle.com" android:path="mycronycle" />
             </intent-filter>
         </activity>
         <activity
@@ -34,8 +35,7 @@
             
             
             <intent-filter>
-                <action android:name="com.cronycle.client.TwitterAuth" >
-                </action>
+                <action android:name="com.cronycle.client.TwitterAuth" ></action>
 				<category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -62,9 +62,20 @@
 				<category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <meta-data android:name="com.crashlytics.ApiKey" android:value="86e81c89b02a79c563258e2322019a91426d2e6f"/>
         
-
+        <activity
+            android:name=".ReaderActivity"
+            android:exported="true" >
+            
+            <intent-filter>
+                <action android:name="com.cronycle.client.ReaderActivity" >
+                </action>
+				<category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="86e81c89b02a79c563258e2322019a91426d2e6f"/>
         
     </application>
 

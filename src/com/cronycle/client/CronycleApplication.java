@@ -14,6 +14,8 @@ public class CronycleApplication extends Application {
 	public Typeface proximaNovaRegular;
 	public Typeface proximaNovaSemiBold;
 	public Typeface proximaNovaLight;
+	
+	public Object nextActivitySubject;
 	 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -46,5 +48,14 @@ public class CronycleApplication extends Application {
 	
 	public CronycleCollection[] getCurrentCollections() {
 		return this.currentCollections;
+	}
+	
+	public Object getNextActivityObject()
+	{
+		if (nextActivitySubject == null) return null;
+		
+		Object x = nextActivitySubject;
+		nextActivitySubject = null;
+		return x;
 	}
 }

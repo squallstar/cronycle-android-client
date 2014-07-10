@@ -19,4 +19,9 @@ public class CronycleLink {
 	public CharSequence getPostedAgo() {	    
 	    return DateUtils.getRelativeTimeSpanString(published_at * 1000L);
 	}
+	
+	public String getSourceFullName() {
+		if (sources.length > 0) return sources[0].full_name;
+		return "";
+	}
 }

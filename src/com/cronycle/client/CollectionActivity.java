@@ -1,5 +1,7 @@
 package com.cronycle.client;
 
+import java.util.Locale;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 import com.cronycle.client.Libs.API;
 import com.cronycle.client.Libs.API.OnFetchListener;
 import com.cronycle.client.Libs.CronycleCollection;
+import com.cronycle.client.Libs.CronycleLink;
 import com.cronycle.client.adapters.LinksAdapter;
 
 public class CollectionActivity extends Activity implements OnRefreshListener {
@@ -40,7 +43,7 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	    
 	    overridePendingTransition(R.xml.push_left_in, R.xml.push_left_out);
 	    
-	    CronycleApplication app = (CronycleApplication) getApplication();
+	    final CronycleApplication app = (CronycleApplication) getApplication();
 	    
 	    Intent thisIntent = getIntent();
 	    String private_id = thisIntent.getStringExtra("private_id");
@@ -52,19 +55,9 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	    	}
 	    }
 	    
-	    //getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent))); 
-	    getActionBar().setBackgroundDrawable(new ColorDrawable(collection.settings.getColor()));    
 	    this.setTitle(collection.name);
-	    
-	    SpannableString s = new SpannableString(collection.name);
-	    s.setSpan(new TypefaceSpan("ProximaNova-Bold.ttf"), 0, s.length(),
-	            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-	 
-	    // Update the action bar title with the TypefaceSpan instance
-	    ActionBar actionBar = getActionBar();
-	    actionBar.setDisplayHomeAsUpEnabled(true);
-	    actionBar.setTitle(s);
-	    
+	    getActionBar().setBackgroundDrawable(new ColorDrawable(collection.settings.getColor()));    
+	    getActionBar().setDisplayHomeAsUpEnabled(true);
 	    
 	    adapter = new LinksAdapter(this, collection);
 	
@@ -80,10 +73,30 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	        @Override
 	        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	        {
-	        	String url = adapter.getItem(position).url;
-	        	Intent i = new Intent(Intent.ACTION_VIEW);
-	        	i.setData(Uri.parse(url));
-	        	startActivity(i);
+	        	CronycleLink link = adapter.getItem(position);
+	        	
+	        	String u = link.url.toLowerCase(Locale.ENGLISH);
+	        	
+	        	if (u.contains("facebook.com/") ||
+	        		u.contains("twitter.com/") ||
+	        		u.contains("instagram.com/") ||
+	        		u.contains("youtube.com/") ||
+	        		u.contains("ebay.com/") ||
+	        		u.contains("spotify.com")
+	        		
+	        	) {
+	        		// Native intent
+		        	Intent i = new Intent(Intent.ACTION_VIEW);
+		        	i.setData(Uri.parse(link.url));
+		        	startActivity(i);
+	        	} else {
+	        		// Reader mode
+	        		Intent readerIntent = new Intent(getBaseContext(), ReaderActivity.class);
+	        		
+	        		app.nextActivitySubject = link;
+	        		
+	                startActivity(readerIntent);
+	        	}
 	        }
 	    });
 	    

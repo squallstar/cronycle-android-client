@@ -2,7 +2,6 @@ package com.cronycle.client;
 
 import java.util.Locale;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,9 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TypefaceSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -91,6 +87,7 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 		        	startActivity(i);
 	        	} else {
 	        		// Reader mode
+	        		link.parentCollection = collection;
 	        		Intent readerIntent = new Intent(getBaseContext(), ReaderActivity.class);
 	        		
 	        		app.nextActivitySubject = link;

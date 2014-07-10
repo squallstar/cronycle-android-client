@@ -69,7 +69,7 @@ public class TwitterActivity extends Activity {
 
                 	final String uri = API.Current().getOAuthLoginUrl();
                 	
-                	dialog.dismiss();
+                	if (dialog.isShowing()) dialog.dismiss();
                     
                     if (uri != null) {
                     	
@@ -117,7 +117,7 @@ public class TwitterActivity extends Activity {
             					response.user.setAuthToken(response.auth_token);
             					response.user.SaveToPreferences(getApplicationContext());
             					
-            					dialog.dismiss();
+            					if (dialog.isShowing()) dialog.dismiss();
             					
             					//Toast.makeText(getApplicationContext(), String.format("Logged in as %s", response.user.getFull_name()), Toast.LENGTH_LONG).show();
 
@@ -128,7 +128,7 @@ public class TwitterActivity extends Activity {
             				@Override
             				public void failure(RetrofitError arg0) {
             					
-            					dialog.dismiss();
+            					if (dialog.isShowing()) dialog.dismiss();
             					
             					Toast.makeText(getApplicationContext(), "User not found", Toast.LENGTH_LONG).show();
 

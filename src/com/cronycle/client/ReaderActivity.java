@@ -34,7 +34,12 @@ public class ReaderActivity extends Activity {
 	    
 	    overridePendingTransition(R.xml.push_top_in, R.xml.push_hide);
 	    
-	    this.setTitle(link.name);
+	    if (link.parentCollection != null) {
+	    	this.setTitle(link.parentCollection.name);
+	    } else {
+	    	this.setTitle(link.name);
+	    }
+	    
 	    getActionBar().setBackgroundDrawable(new ColorDrawable(Color.BLACK));    
 	    getActionBar().setDisplayHomeAsUpEnabled(true);
 	

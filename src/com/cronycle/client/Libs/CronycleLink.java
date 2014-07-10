@@ -14,6 +14,8 @@ public class CronycleLink {
 	public CronycleAsset lead_image;
 	public Boolean lead_image_in_content;
 	
+	public CronycleCollection parentCollection;
+	
 	public CronycleSource[] sources;	
 	
 	public CharSequence getPostedAgo() {	    

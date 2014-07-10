@@ -128,7 +128,7 @@ public class LinksAdapter extends BaseAdapter {
 							cover.setVisibility(View.VISIBLE);
 						}
 						
-						cover.setBackgroundColor(Color.WHITE);
+						//cover.setBackgroundColor(Color.WHITE);
 					}
 
 					@Override

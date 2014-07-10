@@ -5,9 +5,11 @@ import java.io.InputStream;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 
@@ -77,9 +79,28 @@ public class ReaderActivity extends Activity {
 	        case android.R.id.home:
 	            onBackPressed();
 	            return true;
+	        case R.id.action_share:
+	        	Intent share = new Intent(android.content.Intent.ACTION_SEND);
+	            share.setType("text/plain");
+	            share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+	         
+	            // Add data to the intent, the receiving app will decide
+	            // what to do with it.
+	            share.putExtra(Intent.EXTRA_SUBJECT, link.name);
+	            share.putExtra(Intent.EXTRA_TEXT, link.url);
+	         
+	            startActivity(Intent.createChooser(share, "Share article"));
+	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
+	}
+	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+	    // Inflate the menu; this adds items to the action bar if it is present.
+	    getMenuInflater().inflate(R.xml.reader_menu, menu);
+	    return true;
 	}
 	
 	@Override

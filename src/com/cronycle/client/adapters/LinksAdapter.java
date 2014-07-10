@@ -1,7 +1,6 @@
 package com.cronycle.client.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.view.Display;
 import android.view.LayoutInflater;

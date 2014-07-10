@@ -6,6 +6,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -57,6 +58,7 @@ public class LoginActivity extends Activity {
 
 			final Intent collectionsActivity = new Intent(this, CollectionsActivity.class);
     		
+			final Context ctx = this;
     		
     		Thread thread = new Thread(new Runnable() {
         		public void run() {
@@ -64,7 +66,6 @@ public class LoginActivity extends Activity {
         				
         				@Override
         				public void success(CronycleCollection[] collections, Response arg1) {
-        					//Toast.makeText(getApplicationContext(), String.format("Got %d collections", collections.length), Toast.LENGTH_LONG).show();
         					
         					CronycleApplication app = (CronycleApplication)getApplication();
         					app.setCollections(collections);
@@ -84,7 +85,7 @@ public class LoginActivity extends Activity {
 
 								public void run() {
 									
-                        			new AlertDialog.Builder(getApplicationContext())
+                        			new AlertDialog.Builder(ctx)
                 				    .setTitle("Error")
                 				    .setMessage(err.getMessage())
                 				    .setPositiveButton(android.R.string.ok, null)

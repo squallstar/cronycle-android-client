@@ -26,4 +26,9 @@ public class CronycleLink {
 		if (sources.length > 0) return sources[0].full_name;
 		return "";
 	}
+	
+	public String getGoodLookingTitle() {
+		if (name != null) return name.replaceFirst("^Twitter / [A-z0-9]+: ", "");
+		return "Untitled";
+	}
 }

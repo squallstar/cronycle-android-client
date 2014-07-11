@@ -55,7 +55,7 @@ public class ReaderActivity extends Activity {
 		    is.close();
 
 		    String html = new String(buffer);
-		    html = html.replace("{title}", link.name)
+		    html = html.replace("{title}", link.getGoodLookingTitle())
 		    		   .replace("{content}", link.content)
 		    		   .replace("{author}", link.getSourceFullName())
 		    		   .replace("{posted_ago}", link.getPostedAgo());

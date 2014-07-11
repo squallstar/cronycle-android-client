@@ -83,7 +83,7 @@ public class LinksAdapter extends BaseAdapter {
         final ImageView cover = (ImageView) item.findViewById(R.id.cover);        
         
         TextView title = (TextView) item.findViewById(R.id.title);
-        title.setText(link.name);
+        title.setText(link.getGoodLookingTitle());
         
         TextView sourceLink = (TextView) item.findViewById(R.id.sourceLink);
         sourceLink.setText(link.url.replace("http://", ""));

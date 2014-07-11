@@ -58,7 +58,7 @@ public class LoginActivity extends Activity {
     		
     		Toast.makeText(getApplicationContext(), String.format("Logged in as %s", CronycleUser.CurrentUser().getFull_name()), Toast.LENGTH_SHORT).show();
 
-			final Intent collectionsActivity = new Intent(this, CollectionsActivity.class);
+			final Intent collectionsActivity = new Intent(this, MainActivity.class);
     		
 			final Context ctx = this;
     		

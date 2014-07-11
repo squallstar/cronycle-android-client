@@ -1,5 +1,7 @@
 package com.cronycle.client;
 
+import java.util.ArrayList;
+
 import com.crashlytics.android.Crashlytics;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -62,10 +64,13 @@ public class LoginActivity extends Activity {
     		
     		Thread thread = new Thread(new Runnable() {
         		public void run() {
-        			API.getCronycleApiClient().getUserCollections(true, 4, CronycleUser.CurrentUser().getAuthToken(), new Callback<CronycleCollection[]>() {
+        			API.getCronycleApiClient().getUserCollections(true, 4, new Callback<ArrayList<CronycleCollection>>() {
         				
         				@Override
-        				public void success(CronycleCollection[] collections, Response arg1) {
+        				public void success(ArrayList<CronycleCollection> collections, Response arg1) {
+        					
+        					// Adds the favourite collection
+        					collections.add(CronycleCollection.FavouriteCollection(CronycleUser.CurrentUser().getFavourite_collection_position()));
         					
         					CronycleApplication app = (CronycleApplication)getApplication();
         					app.setCollections(collections);

@@ -1,6 +1,9 @@
 package com.cronycle.client.Libs;
 
+import java.util.ArrayList;
+
 import retrofit.Callback;
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -37,6 +40,15 @@ public class API {
         if (sCronycleService == null) {
             RestAdapter restAdapter = new RestAdapter.Builder()
                     .setEndpoint("http://api.cronycle.com")
+                    .setRequestInterceptor(new RequestInterceptor() {
+						
+						@Override
+						public void intercept(RequestFacade request) {
+							if (CronycleUser.CurrentUser() != null) {
+								request.addQueryParam("auth_token", CronycleUser.CurrentUser().getAuthToken());
+							}
+						}
+					})
                     .build();
             
             Log.i("API", "REST Service created");
@@ -103,7 +115,7 @@ public class API {
 	    			}
     			}
     			
-    			getCronycleApiClient().getCollectionLinks(collection.private_id, max_timestamp, min_timestamp, CronycleUser.CurrentUser().getAuthToken(), new Callback<CronycleLink[]>() {
+    			Callback<CronycleLink[]> callback = new Callback<CronycleLink[]>() {
 
 					@Override
 					public void failure(RetrofitError arg0) {
@@ -122,10 +134,20 @@ public class API {
 							}
 						}
 						
+						// Updates the total links count when it's less than the links count
+						if (collection.total_links_count < collection.links.size()) {
+							collection.total_links_count = collection.links.size();
+						}
+						
 						cb.onComplete(true, new_links.length);
 					}
-				
-    			});
+				};
+    			
+				if (collection.isFavouriteCollection()) {
+					getCronycleApiClient().getFavouriteCollectionLinks(max_timestamp, min_timestamp, callback);
+				} else {
+					getCronycleApiClient().getCollectionLinks(collection.private_id, max_timestamp, min_timestamp, callback);
+				}
     		}
 		});
 		
@@ -134,7 +156,7 @@ public class API {
 
     public interface CronycleApiInterface {
         @GET("/v3/user.json")
-        void getUser(@Query("auth_token") String auth_token, Callback<CronycleUser> callback);
+        void getUser(Callback<CronycleUser> callback);
         
         @POST("/v3/sign_in.json")
     	void twitterSignIn(@Body CronycleRequestSignIn userData, Callback<CronycleResponseSignIn> callback);
@@ -143,8 +165,7 @@ public class API {
         void getUserCollections(
         		@Query("include_links") Boolean include_links,
         		@Query("include_first") int include_first,
-        		@Query("auth_token") String auth_token,
-        		Callback<CronycleCollection[]> callback
+        		Callback<ArrayList<CronycleCollection>> callback
         );
         
         @GET("/v3/collections/{private_id}/links.json")
@@ -152,7 +173,13 @@ public class API {
         		@Path("private_id") String private_id,
         		@Query("max_timestamp") Integer max_timestamp,
         		@Query("min_timestamp") Integer min_timestamp,
-        		@Query("auth_token") String auth_token,
+        		Callback<CronycleLink[]> callback
+        );
+        
+        @GET("/v3/favourite_collection/links.json")
+        void getFavouriteCollectionLinks(
+        		@Query("max_timestamp") Integer max_timestamp,
+        		@Query("min_timestamp") Integer min_timestamp,
         		Callback<CronycleLink[]> callback
         );
     }	

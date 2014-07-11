@@ -1,5 +1,7 @@
 package com.cronycle.client.adapters;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,19 +19,19 @@ public class CollectionsAdapter extends BaseAdapter {
 	
 	private Context mContext;
 	
-	private CronycleCollection[] collections;
+	private ArrayList<CronycleCollection> collections;
 
-    public CollectionsAdapter(Context c, CronycleCollection[] collections) {
+    public CollectionsAdapter(Context c, ArrayList<CronycleCollection> collections) {
         this.mContext = c;
         this.collections = collections;
     }
 
     public int getCount() {
-        return collections.length;
+        return collections.size();
     }
 
     public CronycleCollection getItem(int position) {
-        return collections[position];
+        return collections.get(position);
     }
 
     public long getItemId(int position) {
@@ -66,6 +68,8 @@ public class CollectionsAdapter extends BaseAdapter {
         
         if (collection.cover_asset != null) {
         	Picasso.with(mContext).load(collection.cover_asset.getSmallOrDefaultAsset()).into(cover);
+        } else {
+        	cover.setImageResource(android.R.color.transparent);
         }
         
         return item;

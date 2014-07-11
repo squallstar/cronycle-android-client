@@ -9,23 +9,44 @@ public class CronycleCollection {
 	
 	public int id;
 	public String private_id;
-	public String name;
-	public String description;
+	public String name = "New collection";
+	public String description = "";
 	public int position;
-	public boolean owned_collection;
-	public boolean publicly_visible;
+	public boolean owned_collection = true;
+	public boolean publicly_visible = false;
 	public String type;
-	public int total_links_count;
+	public int total_links_count = 0;
+	
+	private static String FAVOURITE_COLLECTION_PRIVATE_ID = "favourite_collection";
 	
 	public CronycleCollectionSettings settings;
 	
 	public CronycleCollection() {
 		this.links = new ArrayList<CronycleLink>();
+		this.settings = new CronycleCollectionSettings();
+	}
+	
+	public static CronycleCollection FavouriteCollection(int position) {
+		CronycleCollection f = new CronycleCollection();
+		f.id = 0;
+		f.private_id = FAVOURITE_COLLECTION_PRIVATE_ID;
+		f.name = "Favourites";
+		f.position = position;
+		
+		return f;
+	}
+	
+	public boolean isFavouriteCollection() {
+		return private_id.equals(FAVOURITE_COLLECTION_PRIVATE_ID);
 	}
 	
 	public static class CronycleCollectionSettings {
-		public String color;
+		public String color = "yellow";
 		private int internalColor = 0;
+		
+		public CronycleCollectionSettings() {
+			links = new CronycleCollectionLinksSettings();
+		}
 		
 		public CronycleCollectionLinksSettings links;
 		

@@ -32,7 +32,7 @@ public class CollectionsFragment extends Fragment {
 
 	public void fillView(View v) {
 		
-	    CronycleApplication app = (CronycleApplication) activity.getApplication();
+	    final CronycleApplication app = (CronycleApplication) activity.getApplication();
 	    final CollectionsAdapter adapter = new CollectionsAdapter(activity, app.getCurrentCollections());
 	
 	    GridView gridview = (GridView) v.findViewById(R.id.gridview);
@@ -43,8 +43,9 @@ public class CollectionsFragment extends Fragment {
 	        @Override
 	        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	        {
+	        	app.nextActivitySubject = adapter.getItem(position);
+	        	
 	            Intent collectionIntent = new Intent(activity.getApplicationContext(), CollectionActivity.class);
-	            collectionIntent.putExtra("private_id", adapter.getItem(position).private_id);
                 startActivity(collectionIntent);
 	        }
 	    });

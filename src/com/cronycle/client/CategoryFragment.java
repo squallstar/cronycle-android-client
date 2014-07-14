@@ -6,12 +6,15 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.cronycle.client.Libs.API;
 import com.cronycle.client.Libs.CronycleCollection;
@@ -28,9 +31,7 @@ public class CategoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
-        // The last two arguments ensure LayoutParams are inflated
-        // properly.
-    	
+
         View rootView = inflater.inflate(R.layout.fragment_directory_category, container, false);
         
         Bundle args = getArguments();
@@ -49,6 +50,18 @@ public class CategoryFragment extends Fragment {
     	
 	    GridView gridview = (GridView) rootView.findViewById(R.id.collectionsGridView);
 	    gridview.setAdapter(adapter);
+	    
+	    gridview.setOnItemClickListener(new OnItemClickListener()
+	    {
+	        @Override
+	        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+	        {
+	        	app.nextActivitySubject = adapter.getItem(position);
+	        	
+	            Intent collectionIntent = new Intent(getActivity().getApplicationContext(), CollectionActivity.class);
+                startActivity(collectionIntent);
+	        }
+	    });
         
         if (category.collections.size() == 0) {
         	

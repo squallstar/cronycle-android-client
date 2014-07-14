@@ -41,15 +41,7 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	    
 	    final CronycleApplication app = (CronycleApplication) getApplication();
 	    
-	    Intent thisIntent = getIntent();
-	    String private_id = thisIntent.getStringExtra("private_id");
-	    
-	    for (CronycleCollection c: app.getCurrentCollections()) {
-	    	if (c.private_id.equals(private_id)) {
-	    		collection = c;
-	    		break;
-	    	}
-	    }
+	    this.collection = (CronycleCollection) app.getNextActivityObject();
 	    
 	    this.setTitle(collection.name);
 	    getActionBar().setBackgroundDrawable(new ColorDrawable(collection.settings.getColor()));    

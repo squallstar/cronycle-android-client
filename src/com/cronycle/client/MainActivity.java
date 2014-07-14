@@ -3,7 +3,6 @@ package com.cronycle.client;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import android.app.Activity;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;

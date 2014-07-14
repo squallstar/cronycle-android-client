@@ -16,9 +16,6 @@
 	    android:verticalSpacing="10dp"
 	    android:padding="10dp"
 	    android:clipToPadding="false"
-	    >
-	    
-	
-	</GridView>
+	/>
 
 </android.support.v4.widget.SwipeRefreshLayout>

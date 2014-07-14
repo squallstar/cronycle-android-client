@@ -182,5 +182,17 @@ public class API {
         		@Query("min_timestamp") Integer min_timestamp,
         		Callback<CronycleLink[]> callback
         );
+        
+        @GET("/v3/directory.json")
+        void getDirectoryCategories(
+        		Callback<CronycleDirectoryCategory[]> callback
+        );
+        
+        @GET("/v4/directory/{slug}.json")
+        void getCategoryCollections(
+        		@Path("slug") String slug,
+        		@Query("limit") Integer limit,
+        		Callback<CronycleCollection[]> callback
+        );
     }	
 }

@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -21,7 +22,7 @@ import android.widget.ListView;
 import com.cronycle.client.menu.NavDrawerItem;
 import com.cronycle.client.menu.NavDrawerListAdapter;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -127,14 +128,14 @@ public class MainActivity extends Activity {
             fragment = new CollectionsFragment();
             break;
         case 1:
-            //fragment = new FindPeopleFragment();
+            fragment = new DirectoryFragment();
             break;
         default:
             break;
         }
  
         if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
+            FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment).commit();
  

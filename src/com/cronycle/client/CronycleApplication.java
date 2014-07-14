@@ -7,10 +7,12 @@ import android.content.res.Configuration;
 import android.graphics.Typeface;
 
 import com.cronycle.client.Libs.CronycleCollection;
+import com.cronycle.client.Libs.CronycleDirectoryCategory;
 
 public class CronycleApplication extends Application {
 	
 	private ArrayList<CronycleCollection> currentCollections;
+	private ArrayList<CronycleDirectoryCategory> currentCategories;
 	
 	public Typeface proximaNovaBold;
 	public Typeface proximaNovaRegular;
@@ -27,6 +29,8 @@ public class CronycleApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		
+		this.currentCategories = new ArrayList<CronycleDirectoryCategory>();
 		
 		proximaNovaBold = Typeface.createFromAsset(getAssets(), "ProximaNova-Bold.ttf");
 		proximaNovaRegular = Typeface.createFromAsset(getAssets(), "ProximaNova-Regular.ttf");
@@ -50,6 +54,16 @@ public class CronycleApplication extends Application {
 	
 	public ArrayList<CronycleCollection> getCurrentCollections() {
 		return this.currentCollections;
+	}
+	
+	public void setCategories(CronycleDirectoryCategory[] categories) {
+		for(int x = 0; x < categories.length; x = x+1) {
+			this.currentCategories.add(categories[x]);
+		}
+	}
+	
+	public ArrayList<CronycleDirectoryCategory> getCurrentCategories() {
+		return this.currentCategories;
 	}
 	
 	public Object getNextActivityObject()

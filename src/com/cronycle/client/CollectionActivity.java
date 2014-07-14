@@ -43,6 +43,12 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	    
 	    this.collection = (CronycleCollection) app.getNextActivityObject();
 	    
+	    if (this.collection == null || !(this.collection instanceof CronycleCollection)) {
+            Toast.makeText(getApplicationContext(), "Couldn't view this collection", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+	    }
+	    
 	    this.setTitle(collection.name);
 	    getActionBar().setBackgroundDrawable(new ColorDrawable(collection.settings.getColor()));    
 	    getActionBar().setDisplayHomeAsUpEnabled(true);

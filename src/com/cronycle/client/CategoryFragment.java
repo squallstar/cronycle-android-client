@@ -20,6 +20,7 @@ import com.cronycle.client.Libs.API;
 import com.cronycle.client.Libs.CronycleCollection;
 import com.cronycle.client.Libs.CronycleDirectoryCategory;
 import com.cronycle.client.adapters.CollectionsAdapter;
+import com.cronycle.client.adapters.PublicCollectionsAdapter;
 import com.squareup.okhttp.Request;
 
 public class CategoryFragment extends Fragment {
@@ -46,7 +47,7 @@ public class CategoryFragment extends Fragment {
         	}
         }
         
-        final CollectionsAdapter adapter = new CollectionsAdapter(getActivity(), category.collections);
+        final PublicCollectionsAdapter adapter = new PublicCollectionsAdapter(getActivity(), category.collections);
     	
 	    GridView gridview = (GridView) rootView.findViewById(R.id.collectionsGridView);
 	    gridview.setAdapter(adapter);

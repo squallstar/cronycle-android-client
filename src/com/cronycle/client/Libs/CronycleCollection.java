@@ -106,6 +106,12 @@ public class CronycleCollection {
 		public String full_name;
 		public String nickname;
 		public String image_url;
+		
+		public String getFullName() {
+			if (full_name != null) return full_name;
+			if (nickname != null) return nickname;
+			return "Unknown user";
+		}
 	}
 	
 	public String getTotalLinksCount() {

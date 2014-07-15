@@ -10,6 +10,7 @@ import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.DELETE;
 import retrofit.http.Path;
 import retrofit.http.Query;
 import twitter4j.Twitter;
@@ -193,6 +194,24 @@ public class API {
         		@Path("slug") String slug,
         		@Query("limit") Integer limit,
         		Callback<CronycleCollection[]> callback
+        );
+        
+        @DELETE("/v3/collections/{id}.json")
+        void deleteCollection(
+        		@Path("id") int id,
+        		Callback<Response> callback
+        );
+        
+        @POST("/v3/collections/{id}/follow.json")
+        void followCollection(
+        		@Path("id") int id,
+        		Callback<Response> callback
+        );
+        
+        @DELETE("/v3/collections/{id}/follow.json")
+        void unfollowCollection(
+        		@Path("id") int id,
+        		Callback<Response> callback
         );
     }	
 }

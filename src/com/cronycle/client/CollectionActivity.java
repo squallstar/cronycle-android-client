@@ -2,6 +2,10 @@ package com.cronycle.client;
 
 import java.util.Locale;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,6 +29,10 @@ import com.cronycle.client.Libs.CronycleLink;
 import com.cronycle.client.adapters.LinksAdapter;
 
 public class CollectionActivity extends Activity implements OnRefreshListener {
+	
+	private Menu menu;
+	
+	private boolean isFollowing;
 	
 	CronycleCollection collection;
 	
@@ -115,9 +124,103 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	        case android.R.id.home:
 	            onBackPressed();
 	            return true;
+	        case R.id.action_follow:
+	        	onFollowClicked();
+	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
+	}
+	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+	    // Inflate the menu; this adds items to the action bar if it is present.
+	    getMenuInflater().inflate(R.xml.collection_menu, menu);
+	    this.menu = menu;
+	    
+	    updateMenuTitles();
+	    
+	    return true;
+	}
+	
+	private void updateMenuTitles() {
+		if (menu == null) return;
+		
+        MenuItem followMenu = menu.findItem(R.id.action_follow);
+        
+        if (collection.owned_collection) {
+            followMenu.setTitle(R.string.delete_collection);
+        } else {
+        	
+        	isFollowing = false;
+        	CronycleApplication app = (CronycleApplication) getApplication();
+        	
+        	for (CronycleCollection c : app.getCurrentCollections()) {
+				if (c.id == collection.id) {
+					isFollowing = true;
+					break;
+				}
+			}
+        	
+        	if (isFollowing) {
+        		followMenu.setTitle(R.string.unfollow_collection);
+        	} else {
+        		followMenu.setTitle(R.string.follow_collection);
+        	}
+        }
+    }
+	
+	private void onFollowClicked() {
+		final CronycleApplication app = (CronycleApplication) getApplication();
+		
+		if (collection.owned_collection) {
+			API.getCronycleApiClient().deleteCollection(collection.id, new Callback<Response>() {
+
+				@Override
+				public void failure(RetrofitError err) {
+					Toast.makeText(getApplicationContext(), "Cannot delete the collection", Toast.LENGTH_LONG).show();
+				}
+
+				@Override
+				public void success(Response result, Response response) {
+					Toast.makeText(getApplicationContext(), String.format("%s has been deleted from your Cronycle", collection.name), Toast.LENGTH_LONG).show();
+					app.getCurrentCollections().remove(collection);
+					finish();
+				}
+			});
+		} else {
+			if (isFollowing) {
+				API.getCronycleApiClient().unfollowCollection(collection.id, new Callback<Response>() {
+
+					@Override
+					public void failure(RetrofitError err) {
+						Toast.makeText(getApplicationContext(), "Cannot unsave the collection", Toast.LENGTH_LONG).show();
+					}
+
+					@Override
+					public void success(Response result, Response response) {
+						Toast.makeText(getApplicationContext(), String.format("%s has been unsaved", collection.name), Toast.LENGTH_LONG).show();
+						app.getCurrentCollections().remove(collection);
+						updateMenuTitles();
+					}
+				});
+			} else {
+				API.getCronycleApiClient().followCollection(collection.id, new Callback<Response>() {
+
+					@Override
+					public void failure(RetrofitError err) {
+						Toast.makeText(getApplicationContext(), "Cannot add the collection to your Cronycle", Toast.LENGTH_LONG).show();
+					}
+
+					@Override
+					public void success(Response result, Response response) {
+						Toast.makeText(getApplicationContext(), String.format("%s has been added to your Cronycle", collection.name), Toast.LENGTH_LONG).show();
+						app.getCurrentCollections().add(0, collection);
+						updateMenuTitles();
+					}
+				});
+			}
+		}
 	}
 	
 	@Override

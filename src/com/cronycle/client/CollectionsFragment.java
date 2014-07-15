@@ -17,6 +17,10 @@ public class CollectionsFragment extends Fragment {
 
 	Activity activity;
 	
+	CollectionsAdapter adapter;
+	
+	int previousCollectionCount = 0;
+	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -33,10 +37,12 @@ public class CollectionsFragment extends Fragment {
 	public void fillView(View v) {
 		
 	    final CronycleApplication app = (CronycleApplication) activity.getApplication();
-	    final CollectionsAdapter adapter = new CollectionsAdapter(activity, app.getCurrentCollections());
+	    adapter = new CollectionsAdapter(activity, app.getCurrentCollections());
 	
 	    GridView gridview = (GridView) v.findViewById(R.id.gridview);
 	    gridview.setAdapter(adapter);
+	    
+	    previousCollectionCount = adapter.getCount();
 	    
 	    gridview.setOnItemClickListener(new OnItemClickListener()
 	    {
@@ -51,5 +57,13 @@ public class CollectionsFragment extends Fragment {
 	    });
 	}
 	
-	
+	 @Override
+	  public void onResume() {
+	     super.onResume();
+	     
+	     // Updates the ui anytime the collections count have changed
+	     if (previousCollectionCount > 0 && adapter != null && adapter.getCount() != previousCollectionCount) {
+	    	 adapter.notifyDataSetChanged();
+	     }
+	  }
 }

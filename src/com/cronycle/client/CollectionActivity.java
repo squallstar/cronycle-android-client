@@ -5,7 +5,6 @@ import java.util.Locale;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -134,6 +133,8 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		
 	    // Inflate the menu; this adds items to the action bar if it is present.
 	    getMenuInflater().inflate(R.xml.collection_menu, menu);
 	    this.menu = menu;

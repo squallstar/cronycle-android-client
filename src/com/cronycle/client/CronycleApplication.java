@@ -49,7 +49,8 @@ public class CronycleApplication extends Application {
 	}
  
 	public void setCollections(ArrayList<CronycleCollection> collections) {
-		this.currentCollections = collections;
+		this.currentCollections.clear();
+		this.currentCollections.addAll(collections);
 	}
 	
 	public ArrayList<CronycleCollection> getCurrentCollections() {

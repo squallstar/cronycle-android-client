@@ -1,9 +1,17 @@
 package com.cronycle.client;
 
+import java.util.ArrayList;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +19,18 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
+import com.cronycle.client.Libs.API;
+import com.cronycle.client.Libs.CronycleCollection;
+import com.cronycle.client.Libs.CronycleUser;
 import com.cronycle.client.adapters.CollectionsAdapter;
 
-public class CollectionsFragment extends Fragment {
+public class CollectionsFragment extends Fragment implements OnRefreshListener {
 
 	Activity activity;
 	
 	CollectionsAdapter adapter;
+	
+	SwipeRefreshLayout swipeLayout;
 	
 	int previousCollectionCount = 0;
 	
@@ -55,6 +68,11 @@ public class CollectionsFragment extends Fragment {
                 startActivity(collectionIntent);
 	        }
 	    });
+	    
+	    swipeLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_container);
+	    swipeLayout.setOnRefreshListener(this);
+	    swipeLayout.setColorSchemeColors(Color.parseColor("#566FC3"), Color.parseColor("#ED3F48"), Color.parseColor("#31D890"), Color.parseColor("#606468"));
+	   
 	}
 	
 	 @Override
@@ -66,4 +84,29 @@ public class CollectionsFragment extends Fragment {
 	    	 adapter.notifyDataSetChanged();
 	     }
 	  }
+
+	@Override
+	public void onRefresh() {
+		final CronycleApplication app = (CronycleApplication) activity.getApplication();
+		
+		API.getCronycleApiClient().getUserCollections(true, 4, new Callback<ArrayList<CronycleCollection>>() {
+			
+			@Override
+			public void success(ArrayList<CronycleCollection> collections, Response arg1) {
+				
+				// Adds the favourite collection
+				collections.add(CronycleCollection.FavouriteCollection(CronycleUser.CurrentUser().getFavourite_collection_position()));
+				
+				app.setCollections(collections);
+				
+				swipeLayout.setRefreshing(false);
+				adapter.notifyDataSetChanged();
+			}
+			
+			@Override
+			public void failure(final RetrofitError err) {
+				swipeLayout.setRefreshing(false);
+			}
+		});
+	}
 }

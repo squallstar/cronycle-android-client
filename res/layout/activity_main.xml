@@ -10,17 +10,48 @@
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
- 
-    <!-- Listview to display slider menu -->
-    <ListView
-        android:id="@+id/list_slidermenu"
+    
+    <LinearLayout
+        android:id="@+id/drawer_container"
         android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        android:divider="#232527"
-        android:dividerHeight="1dp"       
-        android:listSelector="@xml/list_selector"
-        android:background="#2e3339"/>
+	    android:layout_height="match_parent"
+	    android:layout_gravity="start"
+	    android:background="#2a2a2a"
+	    android:orientation="vertical"
+	    android:paddingTop="20dp"
+        >
+        
+        <ImageView
+    	android:id="@+id/user_pic"
+		android:contentDescription="User pic"
+		android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:scaleType="centerCrop"
+	    android:layout_gravity="center" />
+        
+        <TextView
+       android:id="@+id/user_name"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_gravity="center"
+       android:textColor="#FFFFFF"
+       android:textSize="15dp"
+       android:padding="10dp"
+       android:singleLine="true"
+       android:ellipsize="end" />
+   
+	    <ListView
+	        android:id="@+id/list_slidermenu"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:paddingTop="10dp"
+	        android:layout_weight="1"
+	        android:choiceMode="singleChoice"
+	        android:divider="#3e3e3e"
+	        android:dividerHeight="1dp"       
+	        android:listSelector="@xml/list_selector"/>
+    </LinearLayout>
+ 
+    
     
 </android.support.v4.widget.DrawerLayout>

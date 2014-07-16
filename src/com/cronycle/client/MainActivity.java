@@ -16,15 +16,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.cronycle.client.Libs.CronycleUser;
+import com.cronycle.client.Libs.RoundedTransformation;
 import com.cronycle.client.menu.NavDrawerItem;
 import com.cronycle.client.menu.NavDrawerListAdapter;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends FragmentActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
+    private LinearLayout drawerContainer;
  
     // nav drawer title
     private CharSequence mDrawerTitle;
@@ -55,6 +62,7 @@ public class MainActivity extends FragmentActivity {
  
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
+        drawerContainer = (LinearLayout) findViewById(R.id.drawer_container);
  
         navDrawerItems = new ArrayList<NavDrawerItem>();
         
@@ -69,7 +77,19 @@ public class MainActivity extends FragmentActivity {
  
         // Recycle the typed array
         navMenuIcons.recycle();
- 
+        
+        ImageView pic = (ImageView) findViewById(R.id.user_pic);
+        String img = CronycleUser.CurrentUser().getImage_url();
+        
+        if (img != null && !img.equals("")) {
+        	Picasso.with(getApplicationContext()).load(img).into(pic);
+        } else {
+        	pic.setVisibility(View.GONE);
+        }
+        
+        TextView username = (TextView) findViewById(R.id.user_name);
+        username.setText(CronycleUser.CurrentUser().getFull_name());
+        
         // setting the nav drawer list adapter
         adapter = new NavDrawerListAdapter(getApplicationContext(),
                 navDrawerItems);
@@ -142,7 +162,7 @@ public class MainActivity extends FragmentActivity {
             mDrawerList.setItemChecked(position, true);
             mDrawerList.setSelection(position);
             setTitle(navMenuTitles[position]);
-            mDrawerLayout.closeDrawer(mDrawerList);
+            mDrawerLayout.closeDrawer(drawerContainer);
         } else {
             // error in creating fragment
             Log.e("MainActivity", "Error in creating fragment");
@@ -177,7 +197,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // if nav drawer is opened, hide the action items
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(drawerContainer);
         //menu.findItem(R.id.action_share).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }

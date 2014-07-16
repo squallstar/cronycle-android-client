@@ -31,6 +31,7 @@ public class CronycleApplication extends Application {
 		super.onCreate();
 		
 		this.currentCategories = new ArrayList<CronycleDirectoryCategory>();
+		this.currentCollections = new ArrayList<CronycleCollection>();
 		
 		proximaNovaBold = Typeface.createFromAsset(getAssets(), "ProximaNova-Bold.ttf");
 		proximaNovaRegular = Typeface.createFromAsset(getAssets(), "ProximaNova-Regular.ttf");

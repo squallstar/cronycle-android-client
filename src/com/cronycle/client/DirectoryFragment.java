@@ -6,6 +6,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -53,7 +54,12 @@ public class DirectoryFragment extends Fragment {
     			
     			@Override
     			public void failure(RetrofitError arg0) {
-    				// Nothing
+    				new AlertDialog.Builder(getActivity().getApplicationContext())
+				    .setTitle("Error")
+				    .setMessage("We couldn't retrieve the directory categories.")
+				    .setPositiveButton(android.R.string.ok, null)
+				    .setIcon(android.R.drawable.ic_dialog_alert)
+				    .show();
     			}
     		});
         }

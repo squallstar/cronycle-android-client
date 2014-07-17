@@ -2,14 +2,16 @@ package com.cronycle.client;
 
 import java.util.ArrayList;
 
-import com.crashlytics.android.Crashlytics;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.cronycle.client.Libs.API;
 import com.cronycle.client.Libs.CronycleCollection;
 import com.cronycle.client.Libs.CronycleUser;
@@ -55,6 +58,20 @@ public class LoginActivity extends Activity {
     	if (CronycleUser.CurrentUser(getApplicationContext()) != null) {
     		btnTwitter.setVisibility(View.GONE);
     		loader.setVisibility(View.VISIBLE);
+        	
+        	if (!isNetworkAvailable()) {
+        		new AlertDialog.Builder(this)
+    		    .setTitle("Internet connection required")
+    		    .setMessage("Cronycle requires an internet collection to run. Please check your connectivity and try again.")
+    		    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+    		        public void onClick(DialogInterface dialog, int which) {
+    		        	android.os.Process.killProcess(android.os.Process.myPid());
+    		        }
+    		    })
+    		    .setIcon(android.R.drawable.ic_dialog_alert)    		    
+    		    .show();
+        		return;
+        	}
     		
     		Toast.makeText(getApplicationContext(), String.format("Logged in as %s", CronycleUser.CurrentUser().getFull_name()), Toast.LENGTH_SHORT).show();
 
@@ -105,5 +122,12 @@ public class LoginActivity extends Activity {
     		
     		thread.start();
     	}
+    }
+    
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager 
+              = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

@@ -23,7 +23,7 @@
         
         <ImageView
     	android:id="@+id/user_pic"
-		android:contentDescription="User pic"
+		android:contentDescription="@string/user_profile_pic"
 		android:layout_width="85dp"
         android:layout_height="85dp"
         android:scaleType="centerCrop"

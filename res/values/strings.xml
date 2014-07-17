@@ -10,6 +10,7 @@
     
     <string name="share_article">Share article</string>
     <string name="article_image">Article image</string>
+    <string name="user_profile_pic">Profile picture</string>
     
     <string name="follow_collection">Add to my Cronycle</string>
     <string name="unfollow_collection">Unfollow collection</string>

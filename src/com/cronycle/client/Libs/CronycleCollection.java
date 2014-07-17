@@ -26,12 +26,12 @@ public class CronycleCollection {
 		this.settings = new CronycleCollectionSettings();
 	}
 	
-	public static CronycleCollection FavouriteCollection(int position) {
+	public static CronycleCollection FavouriteCollection() {
 		CronycleCollection f = new CronycleCollection();
 		f.id = 0;
 		f.private_id = FAVOURITE_COLLECTION_PRIVATE_ID;
 		f.name = "Favourites";
-		f.position = position;
+		f.position = CronycleUser.CurrentUser().getFavourite_collection_position();
 		
 		return f;
 	}

@@ -1,11 +1,8 @@
 package com.cronycle.client;
 
-import java.io.IOException;
-
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,15 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 
 import com.cronycle.client.Libs.API;
 import com.cronycle.client.Libs.CronycleCollection;
 import com.cronycle.client.Libs.CronycleDirectoryCategory;
-import com.cronycle.client.adapters.CollectionsAdapter;
 import com.cronycle.client.adapters.PublicCollectionsAdapter;
-import com.squareup.okhttp.Request;
 
 public class CategoryFragment extends Fragment {
 

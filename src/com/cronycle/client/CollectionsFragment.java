@@ -21,7 +21,6 @@ import android.widget.GridView;
 
 import com.cronycle.client.Libs.API;
 import com.cronycle.client.Libs.CronycleCollection;
-import com.cronycle.client.Libs.CronycleUser;
 import com.cronycle.client.adapters.CollectionsAdapter;
 
 public class CollectionsFragment extends Fragment implements OnRefreshListener {
@@ -95,7 +94,7 @@ public class CollectionsFragment extends Fragment implements OnRefreshListener {
 			public void success(ArrayList<CronycleCollection> collections, Response arg1) {
 				
 				// Adds the favourite collection
-				collections.add(CronycleCollection.FavouriteCollection(CronycleUser.CurrentUser().getFavourite_collection_position()));
+				collections.add(CronycleCollection.FavouriteCollection());
 				
 				app.setCollections(collections);
 				

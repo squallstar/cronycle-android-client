@@ -87,7 +87,7 @@ public class LoginActivity extends Activity {
         				public void success(ArrayList<CronycleCollection> collections, Response arg1) {
         					
         					// Adds the favourite collection
-        					collections.add(CronycleCollection.FavouriteCollection(CronycleUser.CurrentUser().getFavourite_collection_position()));
+        					collections.add(CronycleCollection.FavouriteCollection());
         					
         					CronycleApplication app = (CronycleApplication)getApplication();
         					app.setCollections(collections);

@@ -2,16 +2,11 @@ package com.cronycle.client.adapters;
 
 import java.util.ArrayList;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.cronycle.client.CategoryFragment;
-import com.cronycle.client.Libs.API;
 import com.cronycle.client.Libs.CronycleDirectoryCategory;
 
 public class DirectoryCategoryAdapter extends FragmentStatePagerAdapter {

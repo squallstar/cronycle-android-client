@@ -1,7 +1,6 @@
 package com.cronycle.client;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Locale;
 
 import android.content.Intent;
@@ -13,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +23,6 @@ import android.widget.TextView;
 
 import com.cronycle.client.Libs.CronycleCollection;
 import com.cronycle.client.Libs.CronycleUser;
-import com.cronycle.client.Libs.RoundedTransformation;
 import com.cronycle.client.menu.NavDrawerItem;
 import com.cronycle.client.menu.NavDrawerListAdapter;
 import com.squareup.picasso.Picasso;
@@ -224,7 +221,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // if nav drawer is opened, hide the action items
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(drawerContainer);
+        //boolean drawerOpen = mDrawerLayout.isDrawerOpen(drawerContainer);
         //menu.findItem(R.id.action_share).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }

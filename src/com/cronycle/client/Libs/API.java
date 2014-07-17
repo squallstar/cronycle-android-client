@@ -125,12 +125,19 @@ public class API {
 
 					@Override
 					public void success(CronycleLink[] new_links, Response arg1) {
+						int count = new_links.length;
+						
 						if (fetchMore) {
-							for(int x = 0; x < new_links.length; x = x+1) {
+							for(int x = 0; x < count; x = x+1) {
 								collection.links.add(new_links[x]);
 							}
+							
+							// Updates the collection cover with the first link asset
+							if (count > 0 && new_links[0].lead_image != null) {
+								collection.cover_asset = new_links[0].lead_image;
+							}
 						} else {
-							for(int x = new_links.length -1; x >= 0; x = x-1) {
+							for(int x = count -1; x >= 0; x = x-1) {
 								collection.links.add(0, new_links[x]);
 							}
 						}
@@ -140,7 +147,7 @@ public class API {
 							collection.total_links_count = collection.links.size();
 						}
 						
-						cb.onComplete(true, new_links.length);
+						cb.onComplete(true, count);
 					}
 				};
     			

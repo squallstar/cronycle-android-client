@@ -1,12 +1,13 @@
 package com.cronycle.client.adapters;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import org.askerov.dynamicgrid.BaseDynamicGridAdapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,34 +16,20 @@ import com.cronycle.client.R;
 import com.cronycle.client.Libs.CronycleCollection;
 import com.squareup.picasso.Picasso;
 
-public class CollectionsAdapter extends BaseAdapter {
+public class CollectionsAdapter extends BaseDynamicGridAdapter {
 	
 	private Context mContext;
-	
-	private ArrayList<CronycleCollection> collections;
 
-    public CollectionsAdapter(Context c, ArrayList<CronycleCollection> collections) {
-        this.mContext = c;
-        this.collections = collections;
-    }
-
-    public int getCount() {
-        return collections.size();
-    }
-
-    public CronycleCollection getItem(int position) {
-        return collections.get(position);
-    }
-
-    public long getItemId(int position) {
-        return 0;
+    public CollectionsAdapter(Context context, List<?> items, int columnCount) {
+        super(context, items, columnCount);
+        this.mContext = context;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
     	
     	View item;
         
-        CronycleCollection collection = getItem(position);
+        CronycleCollection collection = (CronycleCollection) getItem(position);
         
         if (convertView == null) {
         	LayoutInflater inflater = LayoutInflater.from(mContext);

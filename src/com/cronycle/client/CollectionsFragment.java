@@ -2,6 +2,8 @@ package com.cronycle.client;
 
 import java.util.ArrayList;
 
+import org.askerov.dynamicgrid.DynamicGridView;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -17,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
 
 import com.cronycle.client.Libs.API;
 import com.cronycle.client.Libs.CronycleCollection;
@@ -26,6 +27,8 @@ import com.cronycle.client.adapters.CollectionsAdapter;
 public class CollectionsFragment extends Fragment implements OnRefreshListener {
 
 	Activity activity;
+	
+	DynamicGridView gridview;
 	
 	CollectionsAdapter adapter;
 	
@@ -49,9 +52,9 @@ public class CollectionsFragment extends Fragment implements OnRefreshListener {
 	public void fillView(View v) {
 		
 	    final CronycleApplication app = (CronycleApplication) activity.getApplication();
-	    adapter = new CollectionsAdapter(activity, app.getCurrentCollections());
+	    adapter = new CollectionsAdapter(activity, app.getCurrentCollections(), 2);
 	
-	    GridView gridview = (GridView) v.findViewById(R.id.gridview);
+	    gridview = (DynamicGridView) v.findViewById(R.id.gridview);
 	    gridview.setAdapter(adapter);
 	    
 	    previousCollectionCount = adapter.getCount();
@@ -67,6 +70,14 @@ public class CollectionsFragment extends Fragment implements OnRefreshListener {
                 startActivity(collectionIntent);
 	        }
 	    });
+	    
+	    gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            	gridview.startEditMode(position);
+                return false;
+            }
+        });
 	    
 	    swipeLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_container);
 	    swipeLayout.setOnRefreshListener(this);

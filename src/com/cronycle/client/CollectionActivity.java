@@ -149,6 +149,11 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 		
         MenuItem followMenu = menu.findItem(R.id.action_follow);
         
+        if (collection.isFavouriteCollection()) {
+        	followMenu.setVisible(false);
+        	return;
+        }
+        
         if (collection.owned_collection) {
             followMenu.setTitle(R.string.delete_collection);
         } else {

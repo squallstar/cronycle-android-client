@@ -47,7 +47,7 @@
 	        android:paddingTop="10dp"
 	        android:layout_weight="1"
 	        android:choiceMode="singleChoice"
-	        android:divider="#3e3e3e"
+	        android:divider="#222222"
 	        android:dividerHeight="1dp"       
 	        android:listSelector="@xml/list_selector"/>
     </LinearLayout>

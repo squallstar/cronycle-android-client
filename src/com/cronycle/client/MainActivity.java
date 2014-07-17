@@ -1,8 +1,10 @@
 package com.cronycle.client;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Locale;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.cronycle.client.Libs.CronycleCollection;
 import com.cronycle.client.Libs.CronycleUser;
 import com.cronycle.client.Libs.RoundedTransformation;
 import com.cronycle.client.menu.NavDrawerItem;
@@ -67,12 +70,13 @@ public class MainActivity extends FragmentActivity {
         navDrawerItems = new ArrayList<NavDrawerItem>();
         
         String collectionsCount = String.format(Locale.ENGLISH, "%d", ((CronycleApplication)getApplication()).getCurrentCollections().size());
- 
-        // adding nav drawer items to array
+        
         // My Collections
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1), true, collectionsCount));
         // Discover
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
+        //Favourites
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
          
  
         // Recycle the typed array
@@ -142,15 +146,38 @@ public class MainActivity extends FragmentActivity {
     private void displayView(int position) {
         // update the main content by replacing fragments
         Fragment fragment = null;
+        Intent intent = null;
+        
         switch (position) {
-        case 0:
-            fragment = new CollectionsFragment();
-            break;
-        case 1:
-            fragment = new DirectoryFragment();
-            break;
-        default:
-            break;
+	        case 0:
+	            fragment = new CollectionsFragment();
+	            break;
+	            
+	        case 1:
+	            fragment = new DirectoryFragment();
+	            break;
+	            
+	        case 2:
+	        	CronycleApplication app = (CronycleApplication)getApplication();
+	
+	        	CronycleCollection favourite = null;
+	        	for (CronycleCollection collection : app.getCurrentCollections()) {
+					if (collection.isFavouriteCollection()) {
+						favourite = collection;
+						break;
+					}
+				}
+	        	
+	        	if (favourite != null) {
+	        		app.nextActivitySubject = favourite;
+	            	intent = new Intent(getApplicationContext(), CollectionActivity.class);
+	        	} else {
+	        		//Didn't find the favourite collection. Weird
+	        	}
+	            
+	        	break;
+	        default:
+	            break;
         }
  
         if (fragment != null) {
@@ -162,11 +189,11 @@ public class MainActivity extends FragmentActivity {
             mDrawerList.setItemChecked(position, true);
             mDrawerList.setSelection(position);
             setTitle(navMenuTitles[position]);
-            mDrawerLayout.closeDrawer(drawerContainer);
-        } else {
-            // error in creating fragment
-            Log.e("MainActivity", "Error in creating fragment");
+        } else if (intent != null) {
+        	startActivity(intent);
         }
+
+        mDrawerLayout.closeDrawer(drawerContainer);
     }
        
  

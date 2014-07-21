@@ -1,6 +1,11 @@
 package com.cronycle.client.Libs;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import android.text.format.DateUtils;
+
+import com.cronycle.client.Libs.API.OnBooleanActionListener;
 
 public class CronycleLink {
 	public int id;
@@ -8,6 +13,7 @@ public class CronycleLink {
 	public String name;
 	public String description;
 	public String content;
+	public Boolean is_favourited;
 	
 	public int published_at;
 	
@@ -30,5 +36,37 @@ public class CronycleLink {
 	public String getGoodLookingTitle() {
 		if (name != null) return name.replaceFirst("^Twitter / [A-z0-9]+: ", "");
 		return "Untitled";
+	}
+	
+	public void setFavouriteAsync(Boolean value, final OnBooleanActionListener cb) {
+		if (value == true) {
+			API.getCronycleApiClient().favouriteLink(this.id, new Callback<Response>() {
+				
+				@Override
+				public void success(Response arg0, Response arg1) {
+					is_favourited = true;
+					if (cb != null) cb.onComplete(true);
+				}
+				
+				@Override
+				public void failure(RetrofitError arg0) {
+					if (cb != null) cb.onComplete(false);
+				}
+			});
+		} else {
+			API.getCronycleApiClient().unfavouriteLink(this.id, new Callback<Response>() {
+				
+				@Override
+				public void success(Response arg0, Response arg1) {
+					is_favourited = false;
+					if (cb != null) cb.onComplete(true);
+				}
+				
+				@Override
+				public void failure(RetrofitError arg0) {
+					if (cb != null) cb.onComplete(false);
+				}
+			});
+		}
 	}
 }

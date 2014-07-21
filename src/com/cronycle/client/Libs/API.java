@@ -64,6 +64,10 @@ public class API {
         void onComplete(Boolean success, int newLinksCount);
     }
     
+    public interface OnBooleanActionListener {
+        void onComplete(Boolean success);
+    }
+    
     /*
 	 * - Creates object of Twitter and sets consumerKey and consumerSecret
 	 * - Prepares the URL accordingly and opens the WebView for the user to provide sign-in details
@@ -218,6 +222,18 @@ public class API {
         @DELETE("/v3/collections/{id}/follow.json")
         void unfollowCollection(
         		@Path("id") int id,
+        		Callback<Response> callback
+        );
+        
+        @POST("/v3/favourite_collection.json")
+        void favouriteLink(
+        		@Query("id") int link_id,
+        		Callback<Response> callback
+        );
+        
+        @DELETE("/v3/favourite_collection.json")
+        void unfavouriteLink(
+        		@Query("id") int link_id,
         		Callback<Response> callback
         );
     }	

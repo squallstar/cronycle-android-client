@@ -12,13 +12,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.widget.Toast;
 
+import com.cronycle.client.Libs.API.OnBooleanActionListener;
 import com.cronycle.client.Libs.CronycleLink;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class ReaderActivity extends Activity {
 	
 	private CronycleLink link;
+	
+	private Menu menu;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -91,6 +95,9 @@ public class ReaderActivity extends Activity {
 	         
 	            startActivity(Intent.createChooser(share, "Share article"));
 	        	return true;
+	        case R.id.action_favourite:
+	        	toggleFavourite();
+	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
@@ -100,7 +107,45 @@ public class ReaderActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
 	    // Inflate the menu; this adds items to the action bar if it is present.
 	    getMenuInflater().inflate(R.xml.reader_menu, menu);
+	    
+	    this.menu = menu;
+	    updateMenuTitles();
+	    
 	    return true;
+	}
+	
+	private void updateMenuTitles() {
+		if (menu == null) return;
+		
+        MenuItem favouriteMenu = menu.findItem(R.id.action_favourite);
+        
+        if (link.is_favourited) {
+        	favouriteMenu.setTitle(R.string.remove_from_favourites);
+        } else {
+        	favouriteMenu.setTitle(R.string.add_to_favourites);
+        }
+	}
+	
+	private void toggleFavourite() {
+		link.setFavouriteAsync(!link.is_favourited, new OnBooleanActionListener() {
+			
+			@Override
+			public void onComplete(Boolean success) {
+				if (success) {
+					if (link.is_favourited) {
+						Toast.makeText(getApplicationContext(), "The article has been added to your favourites", Toast.LENGTH_SHORT).show();
+					} else {
+						Toast.makeText(getApplicationContext(), "The article has been removed from your favourites", Toast.LENGTH_SHORT).show();
+					}
+					
+					updateMenuTitles();
+					
+				} else {
+					// Display error
+					Toast.makeText(getApplicationContext(), "Error: could not change the status of the article", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
 	}
 	
 	@Override

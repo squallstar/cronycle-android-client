@@ -61,6 +61,10 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	    getActionBar().setBackgroundDrawable(new ColorDrawable(collection.settings.getColor()));    
 	    getActionBar().setDisplayHomeAsUpEnabled(true);
 	    
+	    if (collection.isFavouriteCollection()) {
+	    	getActionBar().setLogo(R.drawable.ic_favourite_head);
+	    }
+	    
 	    adapter = new LinksAdapter(this, collection);
 	
 	    GridView itemsview = (GridView) findViewById(R.id.itemsview);

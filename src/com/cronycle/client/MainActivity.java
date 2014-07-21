@@ -156,21 +156,9 @@ public class MainActivity extends FragmentActivity {
 	            
 	        case 2:
 	        	CronycleApplication app = (CronycleApplication)getApplication();
-	
-	        	CronycleCollection favourite = null;
-	        	for (CronycleCollection collection : app.getCurrentCollections()) {
-					if (collection.isFavouriteCollection()) {
-						favourite = collection;
-						break;
-					}
-				}
-	        	
-	        	if (favourite != null) {
-	        		app.nextActivitySubject = favourite;
-	            	intent = new Intent(getApplicationContext(), CollectionActivity.class);
-	        	} else {
-	        		//Didn't find the favourite collection. Weird
-	        	}
+		        	
+	        	app.nextActivitySubject = app.getCurrentCollections().getFavouriteCollection();
+            	intent = new Intent(getApplicationContext(), CollectionActivity.class);
 	            
 	        	break;
 	        default:

@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.cronycle.client.Libs.API;
 import com.cronycle.client.Libs.CronycleCollection;
+import com.cronycle.client.Libs.CronycleCollections;
 import com.cronycle.client.Libs.CronycleUser;
 
 public class LoginActivity extends Activity {
@@ -81,13 +82,10 @@ public class LoginActivity extends Activity {
     		
     		Thread thread = new Thread(new Runnable() {
         		public void run() {
-        			API.getCronycleApiClient().getUserCollections(true, 4, new Callback<ArrayList<CronycleCollection>>() {
+        			API.getCronycleApiClient().getUserCollections(true, 4, new Callback<CronycleCollections>() {
         				
         				@Override
-        				public void success(ArrayList<CronycleCollection> collections, Response arg1) {
-        					
-        					// Adds the favourite collection
-        					collections.add(CronycleCollection.FavouriteCollection());
+        				public void success(CronycleCollections collections, Response arg1) {
         					
         					CronycleApplication app = (CronycleApplication)getApplication();
         					app.setCollections(collections);

@@ -127,22 +127,12 @@ public class ReaderActivity extends Activity {
 	}
 	
 	private void toggleFavourite() {
-		link.setFavouriteAsync(!link.is_favourited, new OnBooleanActionListener() {
+		link.setFavouriteAsync(!link.is_favourited, (CronycleApplication) getApplication(), new OnBooleanActionListener() {
 			
 			@Override
 			public void onComplete(Boolean success) {
 				if (success) {
-					if (link.is_favourited) {
-						Toast.makeText(getApplicationContext(), "The article has been added to your favourites", Toast.LENGTH_SHORT).show();
-					} else {
-						Toast.makeText(getApplicationContext(), "The article has been removed from your favourites", Toast.LENGTH_SHORT).show();
-					}
-					
 					updateMenuTitles();
-					
-				} else {
-					// Display error
-					Toast.makeText(getApplicationContext(), "Error: could not change the status of the article", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});

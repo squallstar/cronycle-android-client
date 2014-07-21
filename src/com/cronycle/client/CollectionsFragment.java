@@ -21,6 +21,7 @@ import android.widget.GridView;
 
 import com.cronycle.client.Libs.API;
 import com.cronycle.client.Libs.CronycleCollection;
+import com.cronycle.client.Libs.CronycleCollections;
 import com.cronycle.client.adapters.CollectionsAdapter;
 
 public class CollectionsFragment extends Fragment implements OnRefreshListener {
@@ -88,14 +89,10 @@ public class CollectionsFragment extends Fragment implements OnRefreshListener {
 	public void onRefresh() {
 		final CronycleApplication app = (CronycleApplication) activity.getApplication();
 		
-		API.getCronycleApiClient().getUserCollections(true, 4, new Callback<ArrayList<CronycleCollection>>() {
+		API.getCronycleApiClient().getUserCollections(true, 4, new Callback<CronycleCollections>() {
 			
 			@Override
-			public void success(ArrayList<CronycleCollection> collections, Response arg1) {
-				
-				// Adds the favourite collection
-				collections.add(CronycleCollection.FavouriteCollection());
-				
+			public void success(CronycleCollections collections, Response arg1) {				
 				app.setCollections(collections);
 				
 				swipeLayout.setRefreshing(false);

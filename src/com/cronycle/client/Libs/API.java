@@ -177,7 +177,7 @@ public class API {
         void getUserCollections(
         		@Query("include_links") Boolean include_links,
         		@Query("include_first") int include_first,
-        		Callback<ArrayList<CronycleCollection>> callback
+        		Callback<CronycleCollections> callback
         );
         
         @GET("/v3/collections/{private_id}/links.json")

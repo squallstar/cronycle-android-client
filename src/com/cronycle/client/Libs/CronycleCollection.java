@@ -3,6 +3,7 @@ package com.cronycle.client.Libs;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import android.content.Context;
 import android.graphics.Color;
 
 public class CronycleCollection {
@@ -26,7 +27,7 @@ public class CronycleCollection {
 		this.settings = new CronycleCollectionSettings();
 	}
 	
-	public static CronycleCollection FavouriteCollection() {
+	public static CronycleCollection FavouriteCollection() {		
 		CronycleCollection f = new CronycleCollection();
 		f.id = 0;
 		f.private_id = FAVOURITE_COLLECTION_PRIVATE_ID;

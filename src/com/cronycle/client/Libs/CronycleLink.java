@@ -3,7 +3,6 @@ package com.cronycle.client.Libs;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import android.content.Context;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 
@@ -42,19 +41,29 @@ public class CronycleLink {
 		return "Untitled";
 	}
 	
-	public void setFavouriteAsync(Boolean value, final CronycleApplication app, final OnBooleanActionListener cb) {
+	public void setFavouriteAsync(final Boolean value, final CronycleApplication app, final OnBooleanActionListener cb)
+	{
+		this.is_favourited = value;
+		
+		final CronycleLink instance = this;
+		
+		cb.onBefore();
+		
 		if (value == true) {
 			API.getCronycleApiClient().favouriteLink(this.id, new Callback<Response>() {
 				
 				@Override
 				public void success(Response arg0, Response arg1) {
-					is_favourited = true;
-					Toast.makeText(app.getApplicationContext(), R.string.added_to_favourites, Toast.LENGTH_SHORT).show();					
+					Toast.makeText(app.getApplicationContext(), R.string.added_to_favourites, Toast.LENGTH_SHORT).show();
+					
+					app.getCurrentCollections().getFavouriteCollection().links.add(0, instance);
+					
 					if (cb != null) cb.onComplete(true);
 				}
 				
 				@Override
 				public void failure(RetrofitError arg0) {
+					is_favourited = !value;
 					Toast.makeText(app.getApplicationContext(), R.string.api_errors_favourited, Toast.LENGTH_SHORT).show();
 					if (cb != null) cb.onComplete(false);
 				}
@@ -63,14 +72,21 @@ public class CronycleLink {
 			API.getCronycleApiClient().unfavouriteLink(this.id, new Callback<Response>() {
 				
 				@Override
-				public void success(Response arg0, Response arg1) {
-					is_favourited = false;
+				public void success(Response arg0, Response arg1) {					
+					for (CronycleLink l: app.getCurrentCollections().getFavouriteCollection().links) {
+						if (l.id == instance.id) {
+							app.getCurrentCollections().getFavouriteCollection().links.remove(l);
+							break;
+						}
+					}
+					
 					Toast.makeText(app.getApplicationContext(), R.string.removed_from_favourites, Toast.LENGTH_SHORT).show();
 					if (cb != null) cb.onComplete(true);
 				}
 				
 				@Override
 				public void failure(RetrofitError arg0) {
+					is_favourited = !value;
 					Toast.makeText(app.getApplicationContext(), R.string.api_errors_favourited, Toast.LENGTH_SHORT).show();
 					if (cb != null) cb.onComplete(false);
 				}

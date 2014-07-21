@@ -3,7 +3,6 @@ package com.cronycle.client.Libs;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import android.content.Context;
 import android.graphics.Color;
 
 public class CronycleCollection {

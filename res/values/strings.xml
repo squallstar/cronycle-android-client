@@ -19,6 +19,8 @@
     <string name="drawer_open">Slider Menu Opened</string>
     <string name="drawer_close">Slider Menu Closed</string>
     
+    <string name="favourite_icon">Toggle favourite</string>
+    
     <string name="add_to_favourites">Add to favourites</string>
     <string name="remove_from_favourites">Remove from favourites</string>
     <string name="added_to_favourites">The article has been added to your favourites</string>

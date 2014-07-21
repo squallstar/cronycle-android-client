@@ -1,7 +1,5 @@
 package com.cronycle.client;
 
-import java.util.ArrayList;
-
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -20,7 +18,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
 import com.cronycle.client.Libs.API;
-import com.cronycle.client.Libs.CronycleCollection;
 import com.cronycle.client.Libs.CronycleCollections;
 import com.cronycle.client.adapters.CollectionsAdapter;
 

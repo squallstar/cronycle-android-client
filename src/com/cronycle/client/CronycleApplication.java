@@ -6,7 +6,6 @@ import android.app.Application;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 
-import com.cronycle.client.Libs.CronycleCollection;
 import com.cronycle.client.Libs.CronycleCollections;
 import com.cronycle.client.Libs.CronycleDirectoryCategory;
 

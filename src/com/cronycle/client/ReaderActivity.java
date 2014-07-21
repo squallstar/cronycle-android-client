@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
-import android.widget.Toast;
 
 import com.cronycle.client.Libs.API.OnBooleanActionListener;
 import com.cronycle.client.Libs.CronycleLink;
@@ -134,6 +133,11 @@ public class ReaderActivity extends Activity {
 				if (success) {
 					updateMenuTitles();
 				}
+			}
+			
+			@Override
+			public void onBefore() {
+				
 			}
 		});
 	}

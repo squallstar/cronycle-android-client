@@ -1,10 +1,12 @@
 package com.cronycle.client.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.cronycle.client.CronycleApplication;
 import com.cronycle.client.R;
 import com.cronycle.client.Libs.API;
+import com.cronycle.client.Libs.API.OnBooleanActionListener;
 import com.cronycle.client.Libs.API.OnFetchListener;
 import com.cronycle.client.Libs.CronycleCollection;
 import com.cronycle.client.Libs.CronycleLink;
@@ -70,7 +73,7 @@ public class LinksAdapter extends BaseAdapter {
     	
     	View item;
         
-        CronycleLink link = getItem(position);
+        final CronycleLink link = getItem(position);
         
         if (convertView == null) {
         	LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -93,6 +96,8 @@ public class LinksAdapter extends BaseAdapter {
         
         TextView description = (TextView) item.findViewById(R.id.description);
         description.setText(link.description);
+        
+        ImageView favouriteIcon = (ImageView) item.findViewById(R.id.favourite_icon);  
         
         if (convertView == null) {
        	 title.setTypeface(((CronycleApplication)mContext.getApplicationContext()).proximaNovaSemiBold);
@@ -145,6 +150,35 @@ public class LinksAdapter extends BaseAdapter {
         	title.setVisibility(View.GONE);
         	description.setVisibility(View.GONE);
         }
+        
+        if (link.is_favourited) {
+        	favouriteIcon.setBackgroundColor(collection.settings.getColor());
+        	favouriteIcon.setImageResource(R.drawable.article_star_on);
+        } else {
+        	favouriteIcon.setBackgroundColor(Color.rgb(208, 208, 208));
+        	favouriteIcon.setImageResource(R.drawable.article_star);
+        }
+        
+        favouriteIcon.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				link.setFavouriteAsync(!link.is_favourited, (CronycleApplication)mContext.getApplicationContext(), new OnBooleanActionListener() {
+					
+					@Override
+					public void onComplete(Boolean success) {
+						if (!success) {
+							notifyDataSetChanged();
+						}
+					}
+					
+					@Override
+					public void onBefore() {
+						notifyDataSetChanged();
+					}
+				});
+			}
+		});
 
         return item;
     }

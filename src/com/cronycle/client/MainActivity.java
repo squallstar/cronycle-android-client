@@ -21,7 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.cronycle.client.Libs.CronycleCollection;
 import com.cronycle.client.Libs.CronycleUser;
 import com.cronycle.client.menu.NavDrawerItem;
 import com.cronycle.client.menu.NavDrawerListAdapter;

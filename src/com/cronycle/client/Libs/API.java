@@ -1,7 +1,5 @@
 package com.cronycle.client.Libs;
 
-import java.util.ArrayList;
-
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -66,6 +64,7 @@ public class API {
     
     public interface OnBooleanActionListener {
         void onComplete(Boolean success);
+        void onBefore();
     }
     
     /*

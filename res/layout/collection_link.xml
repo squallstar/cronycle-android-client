@@ -36,27 +36,60 @@
        android:paddingRight="10dp"
        android:paddingBottom="10dp" /> 
        
-    <TextView
-       android:id="@+id/sourceLink"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:textSize="15sp"
-       android:paddingBottom="7dp"
-       android:paddingLeft="10dp"
-       android:paddingRight="10dp"
-       android:singleLine="true"
-       android:ellipsize="end" /> 
+    <LinearLayout
+        android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:baselineAligned="false"
+        >
+        
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:baselineAligned="false"
+            >
+            
+            <TextView
+		       android:id="@+id/sourceLink"
+		       android:layout_width="wrap_content"
+		       android:layout_height="wrap_content"
+		       android:textSize="15sp"
+		       android:paddingBottom="7dp"
+		       android:paddingLeft="10dp"
+		       android:paddingRight="10dp"
+		       android:singleLine="true"
+		       android:ellipsize="end" /> 
+		       
+		    <TextView
+		       android:id="@+id/postedDate"
+		       android:layout_width="wrap_content"
+		       android:layout_height="wrap_content"
+		       android:textColor="#6e7276"
+		       android:textSize="15sp"
+		       android:singleLine="true"
+		       android:ellipsize="end"
+		       android:paddingLeft="10dp"
+		       android:paddingRight="10dp"
+		       android:paddingBottom="5dp" /> 
+            
+        </LinearLayout>
+        
+        <ImageView
+	    	android:id="@+id/favourite_icon"
+			android:contentDescription="@string/favourite_icon"
+			android:layout_width="28dp"
+	        android:layout_height="28dp"
+	        android:src="@drawable/article_star"
+	        android:background="#CCCCCC"
+	        android:layout_marginTop="4dp"
+	        android:layout_marginRight="4dp"
+	        android:layout_marginLeft="6dp"
+	        />
+        
+    </LinearLayout>
        
-    <TextView
-       android:id="@+id/postedDate"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:textColor="#6e7276"
-       android:textSize="15sp"
-       android:singleLine="true"
-       android:ellipsize="end"
-       android:paddingLeft="10dp"
-       android:paddingRight="10dp"
-       android:paddingBottom="5dp" /> 
+    
 
 </LinearLayout>

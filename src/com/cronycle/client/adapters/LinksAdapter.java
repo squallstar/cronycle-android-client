@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
@@ -159,7 +160,9 @@ public class LinksAdapter extends BaseAdapter {
         	favouriteIcon.setImageResource(R.drawable.article_star);
         }
         
-        favouriteIcon.setOnClickListener(new OnClickListener() {
+        LinearLayout favLayout = (LinearLayout) item.findViewById(R.id.toggle_favourite_wrap);
+        
+        favLayout.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

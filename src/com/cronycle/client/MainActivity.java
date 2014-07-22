@@ -78,17 +78,19 @@ public class MainActivity extends FragmentActivity {
         // Recycle the typed array
         navMenuIcons.recycle();
         
-        ImageView pic = (ImageView) findViewById(R.id.user_pic);
-        String img = CronycleUser.CurrentUser().getImage_url();
-        
-        if (img != null && !img.equals("")) {
-        	Picasso.with(getApplicationContext()).load(img).into(pic);
-        } else {
-        	pic.setVisibility(View.GONE);
+        if (CronycleUser.CurrentUser() != null) {
+	        ImageView pic = (ImageView) findViewById(R.id.user_pic);
+	        String img = CronycleUser.CurrentUser().getImage_url();
+	        
+	        if (img != null && !img.equals("")) {
+	        	Picasso.with(getApplicationContext()).load(img).into(pic);
+	        } else {
+	        	pic.setVisibility(View.GONE);
+	        }
+	        
+	        TextView username = (TextView) findViewById(R.id.user_name);
+	        username.setText(CronycleUser.CurrentUser().getFull_name());
         }
-        
-        TextView username = (TextView) findViewById(R.id.user_name);
-        username.setText(CronycleUser.CurrentUser().getFull_name());
         
         // setting the nav drawer list adapter
         adapter = new NavDrawerListAdapter(getApplicationContext(),

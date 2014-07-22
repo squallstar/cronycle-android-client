@@ -76,17 +76,23 @@
             
         </LinearLayout>
         
-        <ImageView
-	    	android:id="@+id/favourite_icon"
-			android:contentDescription="@string/favourite_icon"
-			android:layout_width="28dp"
-	        android:layout_height="28dp"
-	        android:src="@drawable/article_star"
-	        android:background="#CCCCCC"
-	        android:layout_marginTop="4dp"
-	        android:layout_marginRight="4dp"
-	        android:layout_marginLeft="6dp"
-	        />
+        <LinearLayout
+            android:id="@+id/toggle_favourite_wrap"
+            android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:padding="4dp"
+		    android:layout_marginLeft="4dp"
+			>
+		    
+	        <ImageView
+		    	android:id="@+id/favourite_icon"
+				android:contentDescription="@string/favourite_icon"
+				android:layout_width="28dp"
+		        android:layout_height="28dp"
+		        android:src="@drawable/article_star"
+		        android:background="#CCCCCC"
+		        />
+        </LinearLayout>
         
     </LinearLayout>
        

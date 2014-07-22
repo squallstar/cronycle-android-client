@@ -8,13 +8,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebView;
+import android.view.WindowManager;
 
 import com.cronycle.client.Libs.API.OnBooleanActionListener;
 import com.cronycle.client.Libs.CronycleLink;
+import com.cronycle.client.Libs.CronycleWebView;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class ReaderActivity extends Activity {
@@ -22,7 +24,7 @@ public class ReaderActivity extends Activity {
 	private CronycleLink link;
 	
 	private Menu menu;
-
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,11 @@ public class ReaderActivity extends Activity {
 	    	finish();
 	    	return;
 	    }
+	    
+	    if (Build.VERSION.SDK_INT > 16) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
 	    
 	    setContentView(R.layout.activity_reader);
 	    
@@ -63,8 +70,9 @@ public class ReaderActivity extends Activity {
 		    		   .replace("{author}", link.getSourceFullName())
 		    		   .replace("{posted_ago}", link.getPostedAgo());
 		    
-		    WebView webview = (WebView)this.findViewById(R.id.webview);
+		    CronycleWebView webview = (CronycleWebView)this.findViewById(R.id.webview);
 		    webview.getSettings().setJavaScriptEnabled(true);
+		    
 		    webview.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "UTF-8", "");
 		    
 		} catch (IOException e) {

@@ -6,6 +6,7 @@ import java.util.Locale;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -19,8 +20,11 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 
+import com.cronycle.client.Libs.CronycleCollection;
 import com.cronycle.client.Libs.CronycleUser;
 import com.cronycle.client.menu.NavDrawerItem;
 import com.cronycle.client.menu.NavDrawerListAdapter;
@@ -185,7 +189,45 @@ public class MainActivity extends FragmentActivity {
  
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.xml.main_menu, menu);
+        
+        final MenuItem search = menu.findItem(R.id.search_action);
+        final SearchView searchView = (SearchView) search.getActionView();
+        
+        searchView.setOnQueryTextListener(new OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                CronycleCollection collection = CronycleCollection.SearchCollection(query);
+                
+                searchView.setQuery("", false);
+                searchView.clearFocus();
+                
+                CronycleApplication app = (CronycleApplication) getApplication();
+                app.nextActivitySubject = collection;
+                
+                Intent collectionIntent = new Intent(getApplicationContext(), CollectionActivity.class);
+                startActivity(collectionIntent);
+                
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String text) {
+                return true;
+            }
+        });
+        
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean queryTextFocused) {
+                if(!queryTextFocused) {
+                	search.collapseActionView();
+                    searchView.setQuery("", false);
+                }
+            }
+        });
+        
         return true;
     }
  

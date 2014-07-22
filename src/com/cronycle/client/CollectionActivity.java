@@ -1,5 +1,6 @@
 package com.cronycle.client;
 
+import java.util.Collection;
 import java.util.Locale;
 
 import retrofit.Callback;
@@ -25,6 +26,7 @@ import com.cronycle.client.Libs.API;
 import com.cronycle.client.Libs.API.OnFetchListener;
 import com.cronycle.client.Libs.CronycleCollection;
 import com.cronycle.client.Libs.CronycleLink;
+import com.cronycle.client.Libs.CronycleRequestNewCollection;
 import com.cronycle.client.adapters.LinksAdapter;
 
 public class CollectionActivity extends Activity implements OnRefreshListener {
@@ -158,6 +160,11 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
         	return;
         }
         
+        if (collection.isSearchCollection()) {
+        	followMenu.setTitle(R.string.save_collection);
+        	return;
+        }
+        
         if (collection.owned_collection) {
             followMenu.setTitle(R.string.delete_collection);
         } else {
@@ -183,7 +190,30 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	private void onFollowClicked() {
 		final CronycleApplication app = (CronycleApplication) getApplication();
 		
-		if (collection.owned_collection) {
+		if (collection.isSearchCollection()) {
+			
+			Toast.makeText(getApplicationContext(), "Saving...", Toast.LENGTH_LONG).show();
+			
+			API.getCronycleApiClient().createNewCollection(new CronycleRequestNewCollection(collection), new Callback<CronycleCollection>() {
+				
+				@Override
+				public void failure(RetrofitError err) {
+					Toast.makeText(getApplicationContext(), "Cannot create the collection", Toast.LENGTH_LONG).show();
+				}
+
+				@Override
+				public void success(CronycleCollection new_collection, Response response) {
+					Toast.makeText(getApplicationContext(), String.format("%s has been added to your Cronycle", new_collection.name), Toast.LENGTH_LONG).show();
+					app.getCurrentCollections().add(new_collection.position, new_collection);
+					
+					new_collection.links.addAll(collection.links);
+					
+					finish();
+				}
+				
+			});
+			
+		} else if (collection.owned_collection) {
 			API.getCronycleApiClient().deleteCollection(collection.id, new Callback<Response>() {
 
 				@Override

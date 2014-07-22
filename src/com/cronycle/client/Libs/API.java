@@ -156,6 +156,8 @@ public class API {
     			
 				if (collection.isFavouriteCollection()) {
 					getCronycleApiClient().getFavouriteCollectionLinks(max_timestamp, min_timestamp, callback);
+				} else if (collection.isSearchCollection()) {
+					getCronycleApiClient().getLinksBySearchQuery(collection.name, callback);
 				} else {
 					getCronycleApiClient().getCollectionLinks(collection.private_id, max_timestamp, min_timestamp, callback);
 				}
@@ -164,13 +166,16 @@ public class API {
 		
 		thread.start();
 	}
-
+	
     public interface CronycleApiInterface {
         @GET("/v3/user.json")
         void getUser(Callback<CronycleUser> callback);
         
         @POST("/v3/sign_in.json")
-    	void twitterSignIn(@Body CronycleRequestSignIn userData, Callback<CronycleResponseSignIn> callback);
+    	void twitterSignIn(
+    			@Body CronycleRequestSignIn userData,
+    			Callback<CronycleResponseSignIn> callback
+    	);
         
         @GET("/v3/collections.json")
         void getUserCollections(
@@ -178,6 +183,12 @@ public class API {
         		@Query("include_first") int include_first,
         		Callback<CronycleCollections> callback
         );
+        
+        @POST("/v3/collections.json")
+    	void createNewCollection(
+    			@Body CronycleRequestNewCollection collectionData,
+    			Callback<CronycleCollection> callback
+    	);
         
         @GET("/v3/collections/{private_id}/links.json")
         void getCollectionLinks(
@@ -191,6 +202,12 @@ public class API {
         void getFavouriteCollectionLinks(
         		@Query("max_timestamp") Integer max_timestamp,
         		@Query("min_timestamp") Integer min_timestamp,
+        		Callback<CronycleLink[]> callback
+        );
+        
+        @GET("/v3/search_collection/links.json")
+        void getLinksBySearchQuery(
+        		@Query("search_query") String search_query,
         		Callback<CronycleLink[]> callback
         );
         

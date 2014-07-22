@@ -18,12 +18,14 @@ public class CronycleCollection {
 	public int total_links_count = 0;
 	
 	private static String FAVOURITE_COLLECTION_PRIVATE_ID = "favourite_collection";
+	private static String SEARCH_COLLECTION_PRIVATE_ID = "search_collection";
 	
 	public CronycleCollectionSettings settings;
 	
 	public CronycleCollection() {
 		this.links = new ArrayList<CronycleLink>();
 		this.settings = new CronycleCollectionSettings();
+		this.filters = new ArrayList<CronycleCollectionFilter>();
 	}
 	
 	public static CronycleCollection FavouriteCollection() {		
@@ -36,8 +38,28 @@ public class CronycleCollection {
 		return f;
 	}
 	
+	public static CronycleCollection SearchCollection(String query) {		
+		CronycleCollection f = new CronycleCollection();
+		f.id = 0;
+		f.private_id = SEARCH_COLLECTION_PRIVATE_ID;
+		f.name = query;
+		
+		CronycleCollectionFilter filter = new CronycleCollectionFilter();
+		filter.context = "text";
+		filter.display_text = query;
+		filter.negate = false;
+		filter.filter_value = query;
+		f.filters.add(filter);
+		
+		return f;
+	}
+	
 	public boolean isFavouriteCollection() {
 		return private_id.equals(FAVOURITE_COLLECTION_PRIVATE_ID);
+	}
+	
+	public boolean isSearchCollection() {
+		return private_id.equals(SEARCH_COLLECTION_PRIVATE_ID);
 	}
 	
 	public static class CronycleCollectionSettings {
@@ -93,7 +115,7 @@ public class CronycleCollection {
 		}
 	}
 	
-	public CronycleCollectionFilter[] filters;
+	public ArrayList<CronycleCollectionFilter> filters;
 	
 	public CronycleAsset cover_asset;
 	

@@ -8,10 +8,13 @@
     
     <string name="action_settings">Settings</string>
     
+    <string name="search_title">Search</string>
+    
     <string name="share_article">Share article</string>
     <string name="article_image">Article image</string>
     <string name="user_profile_pic">Profile picture</string>
     
+    <string name="save_collection">Save as a new collection</string>
     <string name="follow_collection">Add to my Cronycle</string>
     <string name="unfollow_collection">Unfollow collection</string>
     <string name="delete_collection">Delete collection</string>

@@ -17,7 +17,15 @@ public class CronycleCollections extends ArrayList<CronycleCollection> {
 		}
 		
 		CronycleCollection collection = CronycleCollection.FavouriteCollection();
-		add(collection.position, collection);
+		
+		// Prevent index out of bounds
+		if (collection.position >= size()) {
+			collection.position = size() - 1;
+			add(collection);
+		} else {
+			add(collection.position, collection);
+		}
+		
 		return collection;
 	}
 	

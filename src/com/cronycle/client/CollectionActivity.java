@@ -127,7 +127,7 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	        case android.R.id.home:
 	            onBackPressed();
 	            return true;
-	        case R.id.action_follow:
+	        case R.id.action_follow_collection:
 	        	onFollowClicked();
 	        	return true;
 	        default:
@@ -151,7 +151,7 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	private void updateMenuTitles() {
 		if (menu == null) return;
 		
-        MenuItem followMenu = menu.findItem(R.id.action_follow);
+        MenuItem followMenu = menu.findItem(R.id.action_follow_collection);
         
         if (collection.isFavouriteCollection()) {
         	followMenu.setVisible(false);

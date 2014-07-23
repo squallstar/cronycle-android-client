@@ -52,8 +52,6 @@ public class CollectionsFragment extends Fragment implements OnRefreshListener {
 	    GridView gridview = (GridView) v.findViewById(R.id.gridview);
 	    gridview.setAdapter(adapter);
 	    
-	    previousCollectionCount = adapter.getCount();
-	    
 	    gridview.setOnItemClickListener(new OnItemClickListener()
 	    {
 	        @Override
@@ -77,9 +75,11 @@ public class CollectionsFragment extends Fragment implements OnRefreshListener {
 	     super.onResume();
 	     
 	     // Updates the ui anytime the collections count have changed
-	     if (previousCollectionCount > 0 && adapter != null && adapter.getCount() != previousCollectionCount) {
+	     if (previousCollectionCount > 0 && adapter.getCount() != previousCollectionCount) {
 	    	 adapter.notifyDataSetChanged();
 	     }
+
+	     previousCollectionCount = adapter.getCount();
 	  }
 
 	@Override

@@ -2,6 +2,7 @@ package com.cronycle.client.Libs;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Random;
 
 import android.graphics.Color;
 
@@ -50,6 +51,11 @@ public class CronycleCollection {
 		filter.negate = false;
 		filter.filter_value = query;
 		f.filters.add(filter);
+		
+		// Random color for this collection
+		String[] colors = {"blue", "charcoal", "cyan", "green", "orange", "pink", "red", "yellow"};
+		Random r = new Random();
+		f.settings.color = colors[r.nextInt(colors.length)];
 		
 		return f;
 	}

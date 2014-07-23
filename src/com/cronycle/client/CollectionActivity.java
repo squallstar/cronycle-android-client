@@ -1,6 +1,5 @@
 package com.cronycle.client;
 
-import java.util.Collection;
 import java.util.Locale;
 
 import retrofit.Callback;
@@ -206,7 +205,22 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 					Toast.makeText(getApplicationContext(), String.format("%s has been added to your Cronycle", new_collection.name), Toast.LENGTH_LONG).show();
 					app.getCurrentCollections().add(new_collection.position, new_collection);
 					
-					new_collection.links.addAll(collection.links);
+					if (collection.links.size() > 0) {
+						new_collection.links.addAll(collection.links);
+						
+						// Adds a default cover asset
+						for (CronycleLink link: collection.links) {
+							if (link.lead_image != null) {
+								new_collection.cover_asset = link.lead_image;
+								break;
+							}
+						}
+						
+						if (new_collection.total_links_count == 0) {
+							// Fake number while the api doesn't return the right count
+							new_collection.total_links_count = 1500;
+						}
+					}
 					
 					finish();
 				}
@@ -214,6 +228,8 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 			});
 			
 		} else if (collection.owned_collection) {
+			Toast.makeText(getApplicationContext(), "Deleting...", Toast.LENGTH_SHORT).show();
+			
 			API.getCronycleApiClient().deleteCollection(collection.id, new Callback<Response>() {
 
 				@Override
@@ -230,6 +246,8 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 			});
 		} else {
 			if (isFollowing) {
+				Toast.makeText(getApplicationContext(), "Unsaving...", Toast.LENGTH_SHORT).show();
+				
 				API.getCronycleApiClient().unfollowCollection(collection.id, new Callback<Response>() {
 
 					@Override
@@ -245,6 +263,8 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 					}
 				});
 			} else {
+				Toast.makeText(getApplicationContext(), "Following...", Toast.LENGTH_SHORT).show();
+				
 				API.getCronycleApiClient().followCollection(collection.id, new Callback<Response>() {
 
 					@Override

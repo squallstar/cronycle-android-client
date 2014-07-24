@@ -280,4 +280,13 @@ public class MainActivity extends FragmentActivity {
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
+    
+    @Override
+	public void onBackPressed() {
+    	if (mDrawerLayout.isDrawerOpen(drawerContainer)) {
+    		mDrawerLayout.closeDrawer(drawerContainer);
+    	} else {
+    		mDrawerLayout.openDrawer(drawerContainer);
+    	}
+	}
 }

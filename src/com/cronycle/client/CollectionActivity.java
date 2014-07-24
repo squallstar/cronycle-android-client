@@ -131,6 +131,13 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	        case R.id.action_follow_collection:
 	        	onFollowClicked();
 	        	return true;
+	        case R.id.action_settings_collection:
+	        	Intent settingsIntent = new Intent(getBaseContext(), CollectionSettingsActivity.class);
+        		CronycleApplication app = (CronycleApplication)getApplication();
+        		app.nextActivitySubject = this.collection;
+        		
+                startActivity(settingsIntent);
+	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }

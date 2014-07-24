@@ -5,4 +5,8 @@
 	    android:id="@+id/action_follow_collection"
 	    android:title="@string/follow_collection" />
 	
+	<item
+	    android:id="@+id/action_settings_collection"
+	    android:title="@string/settings_collection" />
+	
 </menu>

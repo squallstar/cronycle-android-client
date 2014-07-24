@@ -193,8 +193,9 @@ public class MainActivity extends FragmentActivity {
         final MenuItem search = menu.findItem(R.id.search_action);
         final SearchView searchView = (SearchView) search.getActionView();
         
-        searchView.setQueryHint("Search articles");
-        searchView.setIconifiedByDefault(false);
+        //searchView.setQueryHint("Search articles");
+        //searchView.setIconifiedByDefault(false);
+        
         searchView.setOnQueryTextListener(new OnQueryTextListener() {
 
             @Override

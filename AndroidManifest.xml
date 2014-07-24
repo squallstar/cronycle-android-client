@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cronycle.client"
+<manifest package="com.cronycle.client"
     android:versionCode="9"
-    android:versionName="2.1" >
+    android:versionName="2.1" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -86,6 +85,15 @@
             </intent-filter>
         </activity>
         
+        <activity
+            android:name=".CollectionSettingsActivity" >
+            
+            <intent-filter>
+                <action android:name="com.cronycle.client.CollectionSettingsActivity" >
+                </action>
+				<category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         
         <meta-data android:name="com.crashlytics.ApiKey" android:value="86e81c89b02a79c563258e2322019a91426d2e6f"/>
         <activity android:name="MainActivity"></activity>

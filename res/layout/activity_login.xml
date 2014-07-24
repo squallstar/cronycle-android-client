@@ -4,12 +4,12 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:gravity="center_vertical"
-    android:background="#FDB24D"
+    android:background="#000000"
     tools:context="${relativePackage}.${activityClass}" >
     
     <ImageView
-    android:layout_height="250dp"
-    android:layout_width="250dp"
+    android:layout_height="150dp"
+    android:layout_width="150dp"
     android:layout_gravity="center"
     android:contentDescription="Cronycle Logo"
     android:src="@drawable/logo_login" />
@@ -27,13 +27,13 @@
     	android:paddingBottom="50dp"
     	android:text="@string/btn_signin_twitter" />
     
-    <ProgressBar
+    <!-- <ProgressBar
 	  android:id="@+id/loader" 
 	 android:layout_width="wrap_content"
 	 android:layout_height="wrap_content"
 	 android:background ="@xml/progress"
-	 android:layout_marginTop="10dp"
+	 android:layout_marginTop="15dp"
 	 android:layout_gravity="center"
-	 android:visibility="gone" />
+	 android:visibility="gone" />-->
 
 </LinearLayout>

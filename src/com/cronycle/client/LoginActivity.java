@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -24,7 +25,7 @@ import com.cronycle.client.Libs.CronycleUser;
 
 public class LoginActivity extends Activity {
 	
-	ProgressBar loader;
+	//ProgressBar loader;
 	Button btnTwitter;
 
     @Override
@@ -33,11 +34,14 @@ public class LoginActivity extends Activity {
         
         Crashlytics.start(this);
         
-		getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+	    this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	    
         setContentView(R.layout.activity_login);
         
         btnTwitter = (Button) findViewById(R.id.btnSignTwitter);
-        loader = (ProgressBar) findViewById(R.id.loader);
+        //loader = (ProgressBar) findViewById(R.id.loader);
         
         final Intent auth = new Intent(this, TwitterActivity.class);
         btnTwitter.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +59,7 @@ public class LoginActivity extends Activity {
     	
     	if (CronycleUser.CurrentUser(getApplicationContext()) != null) {
     		btnTwitter.setVisibility(View.GONE);
-    		loader.setVisibility(View.VISIBLE);
+    		//loader.setVisibility(View.VISIBLE);
         	
         	if (!isNetworkAvailable()) {
         		new AlertDialog.Builder(this)
@@ -89,7 +93,7 @@ public class LoginActivity extends Activity {
         					
         					LoginActivity.this.runOnUiThread(new Runnable() {
                         		public void run() {
-                        			collectionsActivity.addFlags(/*Intent.FLAG_ACTIVITY_NEW_TASK | */Intent.FLAG_ACTIVITY_CLEAR_TASK); 
+                        			collectionsActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); 
                         			startActivity(collectionsActivity);
                         		}
                         	});

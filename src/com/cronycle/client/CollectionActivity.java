@@ -150,7 +150,7 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	}
 	
 	private void updateMenuTitles() {
-		if (menu == null) return;
+		if (menu == null || collection == null) return;
 		
         MenuItem followMenu = menu.findItem(R.id.action_follow_collection);
         

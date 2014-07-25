@@ -119,7 +119,7 @@ public class TwitterActivity extends Activity {
             					
             					if (dialog.isShowing()) dialog.dismiss();
             					
-            					//Toast.makeText(getApplicationContext(), String.format("Logged in as %s", response.user.getFull_name()), Toast.LENGTH_LONG).show();
+            					Toast.makeText(getApplicationContext(), String.format("Logged in as %s", response.user.getFull_name()), Toast.LENGTH_LONG).show();
 
                                 setResult(Activity.RESULT_OK, getIntent());
                                 finish();

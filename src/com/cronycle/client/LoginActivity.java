@@ -73,16 +73,14 @@ public class LoginActivity extends Activity {
     		    .show();
         		return;
         	}
-    		
-    		Toast.makeText(getApplicationContext(), String.format("Logged in as %s", CronycleUser.CurrentUser().getFull_name()), Toast.LENGTH_SHORT).show();
-
+    	
 			final Intent collectionsActivity = new Intent(this, MainActivity.class);
     		
 			final Context ctx = this;
     		
     		Thread thread = new Thread(new Runnable() {
         		public void run() {
-        			API.getCronycleApiClient().getUserCollections(true, 4, new Callback<CronycleCollections>() {
+        			API.getCronycleApiClient().getUserCollections(false, 0, new Callback<CronycleCollections>() {
         				
         				@Override
         				public void success(CronycleCollections collections, Response arg1) {

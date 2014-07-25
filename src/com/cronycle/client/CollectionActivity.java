@@ -159,8 +159,10 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	private void updateMenuTitles() {
 		if (menu == null || collection == null) return;
 		
+		menu.findItem(R.id.action_settings_collection).setVisible(collection.owned_collection);
+		
         MenuItem followMenu = menu.findItem(R.id.action_follow_collection);
-        
+
         if (collection.isFavouriteCollection()) {
         	followMenu.setVisible(false);
         	return;

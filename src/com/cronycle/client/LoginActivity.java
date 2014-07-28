@@ -69,8 +69,8 @@ public class LoginActivity extends Activity {
             	final View loginView = inflater.inflate(R.layout.login_modal, null);
             	
             	new AlertDialog.Builder(LoginActivity.this)
-                .setTitle("Log in")
-                .setMessage("Please enter your login details")
+                .setTitle("Log in with Cronycle")
+                .setMessage("Please enter your login details.")
                 .setView(loginView)
                 .setPositiveButton("Log in", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {

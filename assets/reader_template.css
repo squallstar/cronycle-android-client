@@ -32,10 +32,11 @@
 }
 
 html, body {
-  background-color: #FFF;
+  background-color: transparent;
   font-family: "Roboto", "Proxima Nova", serif;
   font-size: 1em;
   line-height: 1.4;
+  color: #444;
 }
 
 ul {
@@ -43,7 +44,8 @@ ul {
 }
 
 article {
-  padding: 35px 15px;
+  padding: 25px 15px;
+  background: #FFF;
 }
 
 img {
@@ -52,7 +54,6 @@ img {
 }
 
 .meta {
-  margin-top: 15px;
   color: #84898C;
 }
 
@@ -61,7 +62,7 @@ article {
 }
 
 h1 {
-  font-size: 1.4em;
+  font-size: 1.45em;
   font-weight: 300;
   line-height: 1.35;
   margin-bottom: 15px;

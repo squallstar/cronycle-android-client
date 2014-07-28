@@ -76,7 +76,7 @@
         
         <activity
             android:name=".ReaderActivity"
-            android:exported="true" >
+            android:exported="true">
             
             <intent-filter>
                 <action android:name="com.cronycle.client.ReaderActivity" >

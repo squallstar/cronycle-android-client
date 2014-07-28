@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.cronycle.client.Libs.CronycleWebView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/webview"
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-/>
+    android:background="#FFF"
+    >
+    
+    <ImageView
+    	android:id="@+id/leadImage"
+		android:contentDescription="@string/article_image"
+		android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        />
+    
+	<com.cronycle.client.Libs.CronycleWebView xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/webview"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	/>
+	
+</FrameLayout>

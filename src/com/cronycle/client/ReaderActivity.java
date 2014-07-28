@@ -5,18 +5,26 @@ import java.io.InputStream;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.cronycle.client.Libs.API.OnBooleanActionListener;
 import com.cronycle.client.Libs.CronycleLink;
 import com.cronycle.client.Libs.CronycleWebView;
+import com.cronycle.client.Libs.CronycleWebView.OnScrollChangedCallback;
+import com.squareup.picasso.Picasso;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class ReaderActivity extends Activity {
@@ -72,7 +80,39 @@ public class ReaderActivity extends Activity {
 		    		   .replace("{posted_ago}", link.getPostedAgo());
 		    
 		    CronycleWebView webview = (CronycleWebView)this.findViewById(R.id.webview);
+		    
+		    webview.setBackgroundColor(0x00000000);
 		    webview.getSettings().setJavaScriptEnabled(true);
+		    
+		    if (link.lead_image != null) {
+		    	
+		    	WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+	        	Display display = wm.getDefaultDisplay();
+	        	Point s = new Point();
+	        	display.getSize(s);
+	        	
+	        	int height = (int) Math.round(s.x * link.lead_image.height / link.lead_image.width / 2.9);
+	        	
+	        	html = html.replace("{top-margin}", String.format("%dpx", height));
+		    	
+		    	final ImageView leadImage = (ImageView) findViewById(R.id.leadImage);
+		    	
+		    	Picasso.with(this).load(link.lead_image.url_archived_medium).into(leadImage);
+		    	
+		    	webview.setOnScrollChangedCallback(new OnScrollChangedCallback() {
+					
+					@Override
+					public void onScroll(int l, int t, int oldl, int oldt) {
+
+						FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(leadImage.getLayoutParams());
+						params.setMargins(0, (int) -t/3, 0, 0);
+						leadImage.setLayoutParams(params);
+					}
+				});
+		    	
+		    } else {
+		    	html = html.replace("{top-margin}", "0");
+		    }
 		    
 		    webview.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "UTF-8", "");
 		    

@@ -11,6 +11,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:hint="@string/email_hint"
+    android:textColor="#000"
     android:inputType="textEmailAddress" />
     
     <EditText
@@ -18,6 +19,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:hint="@string/password_hint"
+    android:textColor="#000"
     android:inputType="textPassword" />
     
 </LinearLayout>

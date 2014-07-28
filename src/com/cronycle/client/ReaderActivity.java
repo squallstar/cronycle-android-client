@@ -15,14 +15,15 @@ import android.os.Bundle;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.cronycle.client.Libs.API.OnBooleanActionListener;
 import com.cronycle.client.Libs.CronycleLink;
 import com.cronycle.client.Libs.CronycleWebView;
+import com.cronycle.client.Libs.ScaleToFitWidthHeightTransform;
 import com.cronycle.client.Libs.CronycleWebView.OnScrollChangedCallback;
 import com.squareup.picasso.Picasso;
 
@@ -91,13 +92,23 @@ public class ReaderActivity extends Activity {
 	        	Point s = new Point();
 	        	display.getSize(s);
 	        	
-	        	int height = (int) Math.round(s.x * link.lead_image.height / link.lead_image.width / 2.9);
-	        	
-	        	html = html.replace("{top-margin}", String.format("%dpx", height));
+	        	int height = s.x * link.lead_image.height / link.lead_image.width;
 		    	
 		    	final ImageView leadImage = (ImageView) findViewById(R.id.leadImage);
+		    	leadImage.setLayoutParams(new FrameLayout.LayoutParams(s.x, height));
+	        	
+	        	double ratio = link.lead_image.height * 100.0 / link.lead_image.width;
+	        	
+	        	if (ratio > 100.0) ratio = 100.0;
+	        	
+	        	html = html.replace("{lead-img-ratio}", String.format("%f", ratio))
+	        			   .replace(link.lead_image.url_archived_medium, "");
 		    	
-		    	Picasso.with(this).load(link.lead_image.url_archived_medium).into(leadImage);
+		    	Picasso
+			    	.with(this)
+			    	.load(link.lead_image.url_archived_medium)
+			    	.transform(new ScaleToFitWidthHeightTransform(s.x, false))
+			    	.into(leadImage);
 		    	
 		    	webview.setOnScrollChangedCallback(new OnScrollChangedCallback() {
 					

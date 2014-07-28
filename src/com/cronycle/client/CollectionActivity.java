@@ -159,7 +159,9 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	private void updateMenuTitles() {
 		if (menu == null || collection == null) return;
 		
-		menu.findItem(R.id.action_settings_collection).setVisible(collection.owned_collection);
+		// Re enable when display settings view has been completed
+		//menu.findItem(R.id.action_settings_collection).setVisible(collection.owned_collection);
+		menu.findItem(R.id.action_settings_collection).setVisible(false);
 		
         MenuItem followMenu = menu.findItem(R.id.action_follow_collection);
 

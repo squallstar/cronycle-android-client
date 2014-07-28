@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
@@ -11,6 +12,8 @@ import com.google.gson.annotations.Expose;
 public class CronycleUser {
 	
 	private static CronycleUser currentUserInstance;
+	
+	private static String PREFERENCES_KEY = "current_user";
 
     @Expose
     private int id;
@@ -140,7 +143,7 @@ public class CronycleUser {
     	Editor prefsEditor = prefs.edit();
     	Gson gson = new Gson();
     	String json = gson.toJson(this);
-    	prefsEditor.putString("CurrentUser", json);
+    	prefsEditor.putString(PREFERENCES_KEY, json);
         prefsEditor.commit();
     }
     
@@ -150,9 +153,9 @@ public class CronycleUser {
     	{
     		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
     		
-    		if (prefs.contains("CurrentUser"))
+    		if (prefs.contains(PREFERENCES_KEY))
         	{
-        		String json = prefs.getString("CurrentUser", "");
+        		String json = prefs.getString(PREFERENCES_KEY, "");
         		Gson gson = new Gson();
         		currentUserInstance = gson.fromJson(json, CronycleUser.class);
         	}
@@ -164,6 +167,13 @@ public class CronycleUser {
     public static CronycleUser CurrentUser()
     {
     	return currentUserInstance;
+    }
+    
+    public static void SetCurrentUser(CronycleResponseSignIn userData, Context ctx) {
+    	userData.user.setAuthToken(userData.auth_token);
+    	userData.user.SaveToPreferences(ctx);
+
+		Toast.makeText(ctx, String.format("Logged in as %s", userData.user.getFull_name()), Toast.LENGTH_LONG).show();
     }
 
 }

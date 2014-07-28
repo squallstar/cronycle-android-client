@@ -177,6 +177,12 @@ public class API {
     			Callback<CronycleResponseSignIn> callback
     	);
         
+        @POST("/v3/sign_in.json")
+    	void signIn(
+    			@Body CronycleRequestSignIn userData,
+    			Callback<CronycleResponseSignIn> callback
+    	);
+        
         @GET("/v3/collections.json")
         void getUserCollections(
         		@Query("include_links") Boolean include_links,

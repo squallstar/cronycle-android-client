@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.cronycle.client.Libs.API;
 import com.cronycle.client.Libs.CronycleRequestSignIn;
 import com.cronycle.client.Libs.CronycleResponseSignIn;
+import com.cronycle.client.Libs.CronycleUser;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class TwitterActivity extends Activity {
@@ -114,13 +115,10 @@ public class TwitterActivity extends Activity {
             				@Override
             				public void success(CronycleResponseSignIn response, Response arg1) {
             					
-            					response.user.setAuthToken(response.auth_token);
-            					response.user.SaveToPreferences(getApplicationContext());
+            					CronycleUser.SetCurrentUser(response, getApplicationContext());
             					
             					if (dialog.isShowing()) dialog.dismiss();
             					
-            					Toast.makeText(getApplicationContext(), String.format("Logged in as %s", response.user.getFull_name()), Toast.LENGTH_LONG).show();
-
                                 setResult(Activity.RESULT_OK, getIntent());
                                 finish();
             				}
@@ -136,9 +134,7 @@ public class TwitterActivity extends Activity {
                                 finish(); 
             					
             				}
-            			});
-            			
-            			           			
+            			});         			
             		}
             	});
             	

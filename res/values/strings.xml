@@ -3,7 +3,13 @@
 
     <string name="app_name">Cronycle</string>
     <string name="title_activity_twitter">Twitter Login</string>
+    
     <string name="btn_signin_twitter">Sign in with Twitter</string>
+    <string name="btn_login">Log in</string>
+    
+    <string name="email_hint">Email address</string>
+    <string name="password_hint">Password</string>
+    
     <string name="title_activity_collections">Collections</string>
     
     <string name="action_settings">Settings</string>

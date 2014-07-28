@@ -68,6 +68,7 @@ public class ReaderActivity extends Activity {
 		    html = html.replace("{title}", link.getGoodLookingTitle())
 		    		   .replace("{content}", link.content)
 		    		   .replace("{author}", link.getSourceFullName())
+		    		   .replace("{accent}", link.parentCollection.settings.getHEXColor())
 		    		   .replace("{posted_ago}", link.getPostedAgo());
 		    
 		    CronycleWebView webview = (CronycleWebView)this.findViewById(R.id.webview);

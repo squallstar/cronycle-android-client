@@ -5,16 +5,15 @@
     <title>Cronycle</title>
     <meta content="initial-scale=1.0 maximum-scale=1.0 user-scalable=no width=device-width" name="viewport" />
     <link href="file:///android_asset/reader_template.css" media="all" rel="stylesheet" />
+    <style>
+    	a { color: {accent}; }
+    </style>
   </head>
   <body>
     <article>
 	  <h1>{title}</h1>
-	  <span class="meta">
-	  	<p>Posted by {author}</p>
-	  	<p>{posted_ago}</p>
-	  </span>
-	  <hr />
 	  <div id="content">{content}</div>
+	  <span class="meta">{posted_ago} by {author}</span>
     </article>
   </body>
 </html>

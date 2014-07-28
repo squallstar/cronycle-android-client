@@ -119,6 +119,10 @@ public class CronycleCollection {
 			
 			return internalColor;
 		}
+		
+		public String getHEXColor() {
+			return String.format("#%06X", (0xFFFFFF & getColor()));
+		}
 	}
 	
 	public ArrayList<CronycleCollectionFilter> filters;

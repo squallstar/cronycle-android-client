@@ -3,6 +3,7 @@ package com.cronycle.client;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,21 +12,27 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.cronycle.client.Libs.API;
 import com.cronycle.client.Libs.CronycleCollections;
+import com.cronycle.client.Libs.CronycleRequestSignIn;
+import com.cronycle.client.Libs.CronycleResponseSignIn;
 import com.cronycle.client.Libs.CronycleUser;
+
+@SuppressLint("InflateParams")
 
 public class LoginActivity extends Activity {
 	
-	//ProgressBar loader;
-	Button btnTwitter;
+	ProgressBar loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +46,9 @@ public class LoginActivity extends Activity {
 	    
         setContentView(R.layout.activity_login);
         
-        btnTwitter = (Button) findViewById(R.id.btnSignTwitter);
-        //loader = (ProgressBar) findViewById(R.id.loader);
+        Button btnTwitter = (Button) findViewById(R.id.btnSignTwitter);
+        
+        loader = (ProgressBar) findViewById(R.id.loader);
         
         final Intent auth = new Intent(this, TwitterActivity.class);
         btnTwitter.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +58,64 @@ public class LoginActivity extends Activity {
             	startActivity(auth);
             }
         });
+        
+        Button btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+            	
+            	LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+            	final View loginView = inflater.inflate(R.layout.login_modal, null);
+            	
+            	new AlertDialog.Builder(LoginActivity.this)
+                .setTitle("Log in")
+                .setMessage("Please enter your login details")
+                .setView(loginView)
+                .setPositiveButton("Log in", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                         String email = ((EditText)loginView.findViewById(R.id.email_address)).getText().toString();
+                         String password = ((EditText)loginView.findViewById(R.id.password)).getText().toString();
+                         
+                         if (email.length() > 0 && password.length() > 0) {
+                        	 findViewById(R.id.login_buttons).setVisibility(View.GONE);
+                        	 loader.setVisibility(View.VISIBLE);
+                        	 
+                        	 API.getCronycleApiClient().signIn(new CronycleRequestSignIn(email, password), new Callback<CronycleResponseSignIn>() {
+                 				
+                 				@Override
+                 				public void success(CronycleResponseSignIn response, Response arg1) {
+                 					
+                 					CronycleUser.SetCurrentUser(response, getApplicationContext());
+                 					onResume();
+                 				}
+                 				
+                 				@Override
+                 				public void failure(RetrofitError arg0) {
+
+                               	    loader.setVisibility(View.GONE);
+                 					findViewById(R.id.login_buttons).setVisibility(View.VISIBLE);
+                 					
+                 					new AlertDialog.Builder(LoginActivity.this)
+                 	    		    .setTitle("Oops...")
+                 	    		    .setMessage("The provided email or password didn't match. Please check your login details again.")
+                 	    		    .setPositiveButton(android.R.string.ok, null)
+                 	    		    .setIcon(android.R.drawable.ic_dialog_alert)    		    
+                 	    		    .show();
+                 					
+                 				}
+                 			});
+                        	 
+                         }
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Do nothing.
+                    }
+                }).show();
+            }
+        });
+        
     }
     
     @Override
@@ -57,8 +123,10 @@ public class LoginActivity extends Activity {
     	super.onResume();
     	
     	if (CronycleUser.CurrentUser(getApplicationContext()) != null) {
-    		btnTwitter.setVisibility(View.GONE);
-    		//loader.setVisibility(View.VISIBLE);
+    		
+    		findViewById(R.id.login_buttons).setVisibility(View.GONE);
+    		
+    		loader.setVisibility(View.VISIBLE);
         	
         	if (!isNetworkAvailable()) {
         		new AlertDialog.Builder(this)

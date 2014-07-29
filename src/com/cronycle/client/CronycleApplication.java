@@ -19,7 +19,8 @@ public class CronycleApplication extends Application {
 	public Typeface proximaNovaSemiBold;
 	public Typeface proximaNovaLight;
 	
-	public Object nextActivitySubject;
+	public Object subject_level_one;
+	public Object subject_level_two;
 	 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -67,12 +68,16 @@ public class CronycleApplication extends Application {
 		return this.currentCategories;
 	}
 	
-	public Object getNextActivityObject()
-	{
-		if (nextActivitySubject == null) return null;
-		
-		Object x = nextActivitySubject;
-		nextActivitySubject = null;
-		return x;
+	public void setSubject(Object obj, int level) {
+		if (level == 1) subject_level_one = obj;
+		else subject_level_two = obj;
+	}
+	
+	public void setSubject(Object obj) {
+		setSubject(obj, 1);
+	}
+	
+	public Object getSubject(int level) {
+		return level == 1 ? subject_level_one : subject_level_two;
 	}
 }

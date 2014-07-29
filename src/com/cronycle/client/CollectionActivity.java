@@ -50,7 +50,7 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	    
 	    final CronycleApplication app = (CronycleApplication) getApplication();
 	    
-	    this.collection = (CronycleCollection) app.getNextActivityObject();
+	    this.collection = (CronycleCollection) app.getSubject(1);
 	    
 	    if (this.collection == null || !(this.collection instanceof CronycleCollection)) {
             Toast.makeText(getApplicationContext(), "Couldn't view this collection", Toast.LENGTH_LONG).show();
@@ -101,7 +101,7 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	        		link.parentCollection = collection;
 	        		Intent readerIntent = new Intent(getBaseContext(), ReaderActivity.class);
 	        		
-	        		app.nextActivitySubject = link;
+	        		app.setSubject(link, 2);
 	        		
 	                startActivity(readerIntent);
 	        	}
@@ -132,10 +132,7 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	        	onFollowClicked();
 	        	return true;
 	        case R.id.action_settings_collection:
-	        	Intent settingsIntent = new Intent(getBaseContext(), CollectionSettingsActivity.class);
-        		CronycleApplication app = (CronycleApplication)getApplication();
-        		app.nextActivitySubject = this.collection;
-        		
+	        	Intent settingsIntent = new Intent(getBaseContext(), CollectionSettingsActivity.class);       		
                 startActivity(settingsIntent);
 	        	return true;
 	        default:
@@ -298,6 +295,8 @@ public class CollectionActivity extends Activity implements OnRefreshListener {
 	public void onBackPressed() {
 	    super.onBackPressed();
 	    overridePendingTransition(R.xml.push_right_out, R.xml.push_right_in);
+	    
+		((CronycleApplication)getApplication()).setSubject(null, 1);
 	}
 	
 	@Override

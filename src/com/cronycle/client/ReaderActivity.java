@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout.LayoutParams;
 
 import com.cronycle.client.Libs.API.OnBooleanActionListener;
 import com.cronycle.client.Libs.CronycleLink;
@@ -39,7 +38,7 @@ public class ReaderActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    
-	    link = (CronycleLink) ((CronycleApplication)getApplication()).getNextActivityObject();
+	    link = (CronycleLink) ((CronycleApplication)getApplication()).getSubject(2);
 	    
 	    if (link == null) {
 	    	finish();
@@ -206,5 +205,7 @@ public class ReaderActivity extends Activity {
 	public void onBackPressed() {
 	    super.onBackPressed();
 	    overridePendingTransition(R.xml.push_right_out, R.xml.push_right_in);
+	    
+		((CronycleApplication)getApplication()).setSubject(null, 2);
 	}
 }

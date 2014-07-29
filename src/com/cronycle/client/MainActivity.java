@@ -161,7 +161,7 @@ public class MainActivity extends FragmentActivity {
 	        case 2:
 	        	CronycleApplication app = (CronycleApplication)getApplication();
 		        	
-	        	app.nextActivitySubject = app.getCurrentCollections().getFavouriteCollection();
+	        	app.setSubject(app.getCurrentCollections().getFavouriteCollection());
             	intent = new Intent(getApplicationContext(), CollectionActivity.class);
 	            
 	        	break;
@@ -206,7 +206,7 @@ public class MainActivity extends FragmentActivity {
                 searchView.clearFocus();
                 
                 CronycleApplication app = (CronycleApplication) getApplication();
-                app.nextActivitySubject = collection;
+                app.setSubject(collection);
                 
                 Intent collectionIntent = new Intent(getApplicationContext(), CollectionActivity.class);
                 startActivity(collectionIntent);

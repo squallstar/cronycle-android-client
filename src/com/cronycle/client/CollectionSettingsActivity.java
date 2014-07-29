@@ -21,7 +21,7 @@ public class CollectionSettingsActivity extends Activity {
 	    
 	    final CronycleApplication app = (CronycleApplication) getApplication();
 	    
-	    collection = (CronycleCollection) app.getNextActivityObject();
+	    collection = (CronycleCollection) app.getSubject(1);
 	    
 	    this.setTitle("Display settings");
 	    getActionBar().setBackgroundDrawable(new ColorDrawable(collection.settings.getColor()));    

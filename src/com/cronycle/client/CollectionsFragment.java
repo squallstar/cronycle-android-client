@@ -57,7 +57,7 @@ public class CollectionsFragment extends Fragment implements OnRefreshListener {
 	        @Override
 	        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	        {
-	        	app.nextActivitySubject = adapter.getItem(position);
+	        	app.setSubject(adapter.getItem(position));
 	        	
 	            Intent collectionIntent = new Intent(activity.getApplicationContext(), CollectionActivity.class);
                 startActivity(collectionIntent);

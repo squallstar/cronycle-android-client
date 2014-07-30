@@ -125,7 +125,7 @@ public class LinksAdapter extends BaseAdapter {
         	
         	Picasso
         		.with(mContext)
-        		.load(link.lead_image.getSmallOrDefaultAsset())
+        		.load(link.lead_image.getMediumOrDefaultAsset())
         		.transform(new ScaleToFitWidthHeightTransform(width, false))
         		.into(cover, new Callback() {
 					

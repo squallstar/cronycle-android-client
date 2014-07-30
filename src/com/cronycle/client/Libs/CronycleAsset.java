@@ -10,9 +10,9 @@ public class CronycleAsset {
 	public String url_archived_small;
 	public String embed_code;
 	
-	public String getSmallOrDefaultAsset() {
-		if (url_archived_small != null) return url_archived_small;
+	public String getMediumOrDefaultAsset() {
 		if (url_archived_medium != null) return url_archived_medium;
+		if (url_archived_small != null) return url_archived_small;
 		return url_archived;
 	}
 }

@@ -67,7 +67,7 @@ public class CollectionsAdapter extends BaseAdapter {
         }
         
         if (collection.cover_asset != null) {
-        	Picasso.with(mContext).load(collection.cover_asset.getSmallOrDefaultAsset()).into(cover);
+        	Picasso.with(mContext).load(collection.cover_asset.getMediumOrDefaultAsset()).into(cover);
         } else {
         	cover.setImageResource(android.R.color.transparent);
         }

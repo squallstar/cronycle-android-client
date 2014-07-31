@@ -121,11 +121,13 @@ public class LinksAdapter extends BaseAdapter {
         	int width = size.x - 80;
         	int height = width * link.lead_image.height / link.lead_image.width;
         	
+        	String img = size.x > 768 ? link.lead_image.getMediumOrDefaultAsset() : link.lead_image.getSmallOrDefaultAsset();
+        	
         	cover.setLayoutParams(new LayoutParams(width, height));
         	
         	Picasso
         		.with(mContext)
-        		.load(link.lead_image.getMediumOrDefaultAsset())
+        		.load(img)
         		.transform(new ScaleToFitWidthHeightTransform(width, false))
         		.into(cover, new Callback() {
 					

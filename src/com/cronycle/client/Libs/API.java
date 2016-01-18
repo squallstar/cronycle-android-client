@@ -26,8 +26,8 @@ public class API {
 	Twitter twitter;
 	RequestToken requestToken;
 
-	public final static String consumerKey = "qviFYtnlxu45G8mf1NuC6g";
-	public final static String consumerSecret = "bc9Swfbv6mt8rKLwecYjSUUFsfgCYcxPYuKvRTrLous";
+	public final static String consumerKey = "your-consumer-key";
+	public final static String consumerSecret = "your-consumer-secret-key";
 	public final static String CALLBACKURL = "cronycle://twitter";
 
 	public static API Current() {
